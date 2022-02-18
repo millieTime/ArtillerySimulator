@@ -34,9 +34,6 @@ enum motionIndexes { TIME, X, Y, DX, DY };
  * *******************************************************************/
 double calcVertComp(double speed, double angle)
 {
-   // QUESTIONS:
-   // WHAT IS A AND WHERE DOES IT COME FROM
-   // WE JUST NEED TO FACTOR GRAVITY HERE RIGHT
    return speed * cos(angle);
 }
 
@@ -52,10 +49,6 @@ double calcVertComp(double speed, double angle)
 
 double calcHorComp(double speed, double angle)
 {
-   // QUESTIONS:
-   // WHAT IS A AND WHERE DOES IT COME FROM
-   // WE JUST NEED TO FACTOR DRAG HERE RIGHT?
-   
    return speed * sin(angle);
 }
 
@@ -251,14 +244,20 @@ double luDragCoeff(double mach)
    }
 }
 
+/************************************************************
+ * COMPUTE NEW MOTION
+ * Takes in a reference to the previous motion values and the
+ * current motion values so that it can save memory by only
+ * updating the current motion values instead of returning a
+ * new set of values. Uses prebuilt functions, as well as
+ * the distance-acceleration formula 
+ * d1 = d0 + v*t + 1/2 * a * t^2 
+ * and the velocity-acceleration formula
+ * v1 = v0 + a*t
+ ************************************************************/
 void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
 {
    // Calculate previous acceleration from previous position, velocity, and constants
-   // Calculate current velocity from previous acceleration and velocity.
-   // Calculate current position from previous acceleration, velocity, and position.
-   // Calculate current time from previous time.
-   double accelerationX = 0.0;
-   double accelerationY = 0.0;
    double altitude = previousValues[Y];
    double velocityX = previousValues[DX];
    double velocityY = previousValues[DY];
@@ -267,20 +266,31 @@ void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
                                      circleAreaFromDiameter(SHELL_DIAMETER));
    double dragAcceleration = computeAcceleration(SHELL_MASS, computedDrag);
    
-   accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY));
-   accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) - luGravity(altitude));
-
+   double accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY));
+   double accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) - luGravity(altitude));
+  
+  
+   // Calculate current velocity from previous acceleration and velocity.
    currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
    currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
 
+   // Calculate current position from previous acceleration, velocity, and position.
    currentValues[X] = previousValues[X] + previousValues[DX] * ELAPSED_TIME + 0.5 * accelerationX * ELAPSED_TIME * ELAPSED_TIME;
    currentValues[Y] = previousValues[Y] + previousValues[DY] * ELAPSED_TIME + 0.5 * accelerationY * ELAPSED_TIME * ELAPSED_TIME;
 
+   // Calculate current time from previous time.
    currentValues[TIME] = previousValues[TIME] + ELAPSED_TIME;
 }
 
+/**************************************
+ * MAIN
+ * Calculates how long the shell of the Howitzer is in the air
+ * and how far it travels horizontally based on the user's input
+ * of what angle the Howitzer is aimed at (where zero degrees is up).
+ **************************************/
 int main()
 {
+   
    // Get user input.
    cout << "What is the angle of the howitzer where 0 is up ? ";
    double angleDegrees = 0;
@@ -315,27 +325,33 @@ int main()
    // Okay, at this point one of the value arrays is for a positive altitude
    // and the other is for a negative or zero altitude.
    // values1 will be the negative or zero one if use1, otherwise it's values2
+   double distance = 0.0; //m
+   double time = 0.0;     //s
    if (use1)
    {
       if (values1[Y] == 0)
       {
-         return values1[TIME];
+         distance = values1[X];
+         time = values1[TIME];
       }
       else
       {
-         return interpolate(values2[Y], values2[TIME], values1[Y], values1[TIME], 0.0);
+         distance = interpolate(values2[Y], values2[X], values1[Y], values1[X], 0.0);
+         time = interpolate(values2[Y], values2[TIME], values1[Y], values1[TIME], 0.0);
       }
    }
    else
    {
       if (values2[Y] == 0)
       {
-         return values2[TIME];
+         distance = values2[X];
+         time = values2[TIME];
       }
       else
       {
-         return interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
+         distance = interpolate(values1[Y], values1[X], values2[Y], values2[X], 0.0);
+         time = interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
       }
    }
-
+   cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s";
 }
