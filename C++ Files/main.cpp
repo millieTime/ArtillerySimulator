@@ -18,12 +18,12 @@ using namespace std;
  *    s = overall speed (m/s)
  *    a = directon of travel where 0 is pointing up (radians)
  * *******************************************************************/
-double calcVertComp(double speed, double a)
+double calcVertComp(double speed, double angle)
 {
    // QUESTIONS:
    // WHAT IS A AND WHERE DOES IT COME FROM
    // WE JUST NEED TO FACTOR GRAVITY HERE RIGHT
-   return speed * cos(a);
+   return speed * cos(angle);
 }
 
 /*******************************************************************
@@ -36,13 +36,13 @@ double calcVertComp(double speed, double a)
  *    a = directon of travel where 0 is pointing up (radians)
  * *******************************************************************/
 
-double calcHorComp(double speed, double a)
+double calcHorComp(double speed, double angle)
 {
    // QUESTIONS:
    // WHAT IS A AND WHERE DOES IT COME FROM
    // WE JUST NEED TO FACTOR DRAG HERE RIGHT?
    
-   return speed * sin(a);
+   return speed * sin(angle);
 }
 
 /********************************************************************
