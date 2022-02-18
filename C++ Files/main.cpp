@@ -22,30 +22,6 @@ const double SHELL_DIAMETER   = 0.15489; // m
 const double ELAPSED_TIME     = 0.5;     // s
 enum motionIndexes { TIME, X, Y, DX, DY };
 
-void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
-{
-   // Calculate previous acceleration from previous position, velocity, and constants
-   // Calculate current velocity from previous acceleration and velocity.
-   // Calculate current position from previous acceleration, velocity, and position.
-   // Calculate current time from previous time.
-   double accelerationX = 0.0;
-   double accelerationY = 0.0;
-   double dragAcceleration = computeAcceleration(SHELL_MASS, computeDrag(getDragCoeff(), getDensity(), hypotenuseFromComponents(), circleAreaFromDiameter());
-   accelerationX = getDX(dragAcceleration, angleFromComponents());
-   accelerationY = getDY(dragAcceleration, angleFromComponents()) - getGravity();
-
-   currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
-   currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
-
-   currentValues[X] = previousValues[X] + previousValues[DX] * ELAPSED_TIME + 0.5 * accelerationX * ELAPSED_TIME * ELAPSED_TIME;
-   currentValues[Y] = previousValues[Y] + previousValues[DY] * ELAPSED_TIME + 0.5 * accelerationY * ELAPSED_TIME * ELAPSED_TIME;
-
-   currentValues[TIME] = previousValues[TIME] + ELAPSED_TIME;
-}
-
-
-
-
 /*******************************************************************
  *  CALCULATE VERTICAL COMPONENT
  *  A function to calculate the vertical component of the bullet.
@@ -275,6 +251,32 @@ double luDragCoeff(double mach)
    }
 }
 
+void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
+{
+   // Calculate previous acceleration from previous position, velocity, and constants
+   // Calculate current velocity from previous acceleration and velocity.
+   // Calculate current position from previous acceleration, velocity, and position.
+   // Calculate current time from previous time.
+   double accelerationX = 0.0;
+   double accelerationY = 0.0;
+   double dragAcceleration = computeAcceleration(SHELL_MASS,
+                                                 computeDrag(luDragCoeff(luMach(previousValues[Y])),
+                                                             luAirDensity(previousValues[Y]),
+                                                             hypotenuseFromComponents(previousValues[DX], previousValues[DY]),
+                                                             circleAreaFromDiameter(SHELL_DIAMETER)));
+   
+   accelerationX = calcHorComp(dragAcceleration, calcAngle(previousValues[DX], previousValues[DY]));
+   accelerationY = calcVertComp(dragAcceleration,
+                                calcAngle(previousValues[DX], previousValues[DY]) - luGravity(previousValues[Y]));
+
+   currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
+   currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
+
+   currentValues[X] = previousValues[X] + previousValues[DX] * ELAPSED_TIME + 0.5 * accelerationX * ELAPSED_TIME * ELAPSED_TIME;
+   currentValues[Y] = previousValues[Y] + previousValues[DY] * ELAPSED_TIME + 0.5 * accelerationY * ELAPSED_TIME * ELAPSED_TIME;
+
+   currentValues[TIME] = previousValues[TIME] + ELAPSED_TIME;
+}
 
 int main()
 {
@@ -286,8 +288,8 @@ int main()
 
    // Initialize the two arrays of shell motion information.
    // time, x, y, dx, dy, 
-   double initialDX = getDX(INITIAL_VELOCITY, angleRadians);
-   double initialDY = getDY(INITIAL_VELOCITY, angleRadians);
+   double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
+   double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
 
    double values1[5] = { 0, 0, 0, initialDX, initialDY};
    double values2[5] = { 0, 0, 0, initialDX, initialDY};
