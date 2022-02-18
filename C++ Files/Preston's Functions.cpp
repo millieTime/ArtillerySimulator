@@ -21,7 +21,7 @@ double circleAreaFromDiameter(double diameter)
 }
 
 // Using a = f / m
-double computeAcceeration(double mass, double force)
+double computeAcceleration(double mass, double force)
 {
    return force / mass;
 }
@@ -38,8 +38,22 @@ double radiansFromDegrees(double degrees)
    return degrees * 2 * M_PI / 360.0;
 }
 
-// Using s = sqrt(dx^2 + dy^2)
-double speedFromComponents(double dx, double dy)
+// Using c = sqrt(a^2 + b^2)
+double hypotenuseFromComponents(double a, double b)
 {
-   return sqrt(dx * dx + dy * dy);
+   return sqrt(a * a + b * b);
+}
+
+// Using (y1-y0)/(x1-x0) = (yU-y0)/(xU-x0) where xU is the value to search for
+double interpolate(double x0, double y0, double x1, double y1, double current_x)
+{
+   if (y1 == y0)
+   {
+      // They gave us one point twice, or a constant function.
+      return y1;
+   }
+   else
+   {
+      return (y1 - y0) * (current_x - x0) / (x1 - x0) + y0;
+   }
 }
