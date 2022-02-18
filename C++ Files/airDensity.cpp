@@ -1,3 +1,8 @@
+/*****************************************************
+ * Air Density
+ * A file to store the air density look up values.
+ ******************************************************/
+
 //
 //  airDensity.cpp
 //  ArtillerySimulatorPrototype

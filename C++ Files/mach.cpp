@@ -1,3 +1,8 @@
+/*****************************************************
+ * MACH
+ * A file to store the mach look up values.
+ ******************************************************/
+
 //
 //  mach.cpp
 //  ArtillerySimulatorPrototype

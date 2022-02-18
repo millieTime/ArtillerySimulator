@@ -22,39 +22,6 @@ const double SHELL_DIAMETER   = 0.15489; // m
 const double ELAPSED_TIME     = 0.5;     // s
 enum motionIndexes { TIME, X, Y, DX, DY };
 
-
-/************************************************************
- * COMPUTE NEW MOTION
- * Takes in a reference to the previous motion values and the
- * current motion values so that it can save memory by only
- * updating the current motion values instead of returning a
- * new set of values. Uses prebuilt functions, as well as
- * the distance-acceleration formula 
- * d1 = d0 + v*t + 1/2 * a * t^2 
- * and the velocity-acceleration formula
- * v1 = v0 + a*t
- ************************************************************/
-void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
-{
-   // Calculate previous acceleration from previous position, velocity, and constants
-   double accelerationX = 0.0;
-   double accelerationY = 0.0;
-   double dragAcceleration = computeAcceleration(SHELL_MASS, computeDrag(getDragCoeff(), getDensity(), hypotenuseFromComponents(), circleAreaFromDiameter());
-   accelerationX = getDX(dragAcceleration, angleFromComponents());
-   accelerationY = getDY(dragAcceleration, angleFromComponents()) - getGravity();
-
-   // Calculate current velocity from previous acceleration and velocity.
-   currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
-   currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
-
-   // Calculate current position from previous acceleration, velocity, and position.
-   currentValues[X] = previousValues[X] + previousValues[DX] * ELAPSED_TIME + 0.5 * accelerationX * ELAPSED_TIME * ELAPSED_TIME;
-   currentValues[Y] = previousValues[Y] + previousValues[DY] * ELAPSED_TIME + 0.5 * accelerationY * ELAPSED_TIME * ELAPSED_TIME;
-
-   // Calculate current time from previous time.
-   currentValues[TIME] = previousValues[TIME] + ELAPSED_TIME;
-}
-
 /*******************************************************************
  *  CALCULATE VERTICAL COMPONENT
  *  A function to calculate the vertical component of the bullet.
@@ -67,9 +34,6 @@ void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
  * *******************************************************************/
 double calcVertComp(double speed, double angle)
 {
-   // QUESTIONS:
-   // WHAT IS A AND WHERE DOES IT COME FROM
-   // WE JUST NEED TO FACTOR GRAVITY HERE RIGHT
    return speed * cos(angle);
 }
 
@@ -85,10 +49,6 @@ double calcVertComp(double speed, double angle)
 
 double calcHorComp(double speed, double angle)
 {
-   // QUESTIONS:
-   // WHAT IS A AND WHERE DOES IT COME FROM
-   // WE JUST NEED TO FACTOR DRAG HERE RIGHT?
-   
    return speed * sin(angle);
 }
 
@@ -284,6 +244,44 @@ double luDragCoeff(double mach)
    }
 }
 
+/************************************************************
+ * COMPUTE NEW MOTION
+ * Takes in a reference to the previous motion values and the
+ * current motion values so that it can save memory by only
+ * updating the current motion values instead of returning a
+ * new set of values. Uses prebuilt functions, as well as
+ * the distance-acceleration formula 
+ * d1 = d0 + v*t + 1/2 * a * t^2 
+ * and the velocity-acceleration formula
+ * v1 = v0 + a*t
+ ************************************************************/
+void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
+{
+   // Calculate previous acceleration from previous position, velocity, and constants
+   double altitude = previousValues[Y];
+   double velocityX = previousValues[DX];
+   double velocityY = previousValues[DY];
+   double computedDrag = computeDrag(luDragCoeff(luMach(altitude)), luAirDensity(altitude),
+                                     hypotenuseFromComponents(velocityX, velocityY),
+                                     circleAreaFromDiameter(SHELL_DIAMETER));
+   double dragAcceleration = computeAcceleration(SHELL_MASS, computedDrag);
+   
+   double accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY));
+   double accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) - luGravity(altitude));
+  
+  
+   // Calculate current velocity from previous acceleration and velocity.
+   currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
+   currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
+
+   // Calculate current position from previous acceleration, velocity, and position.
+   currentValues[X] = previousValues[X] + previousValues[DX] * ELAPSED_TIME + 0.5 * accelerationX * ELAPSED_TIME * ELAPSED_TIME;
+   currentValues[Y] = previousValues[Y] + previousValues[DY] * ELAPSED_TIME + 0.5 * accelerationY * ELAPSED_TIME * ELAPSED_TIME;
+
+   // Calculate current time from previous time.
+   currentValues[TIME] = previousValues[TIME] + ELAPSED_TIME;
+}
+
 /**************************************
  * MAIN
  * Calculates how long the shell of the Howitzer is in the air
@@ -301,8 +299,8 @@ int main()
 
    // Initialize the two arrays of shell motion information.
    // time, x, y, dx, dy, 
-   double initialDX = getDX(INITIAL_VELOCITY, angleRadians);
-   double initialDY = getDY(INITIAL_VELOCITY, angleRadians);
+   double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
+   double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
 
    double values1[5] = { 0, 0, 0, initialDX, initialDY};
    double values2[5] = { 0, 0, 0, initialDX, initialDY};
