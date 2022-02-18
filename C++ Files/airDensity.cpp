@@ -1,6 +1,6 @@
 //
-//  airDensity.h
-//  ArtillaryPrototype
+//  airDensity.cpp
+//  ArtillerySimulatorPrototype
 //
 //  Created by Emilio on 2/18/22.
 //

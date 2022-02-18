@@ -3,9 +3,14 @@
 
 #include <iostream>
 #include <cmath>              /* for atan() */
-#include "airDensity.h"       /* for air density table look up */
+#include <map>                /* for map */
+#include "airDensity.cpp"     /* for air density table look up */
+#include "drag.cpp"           /* for drag coefficient table look up */
+#include "mach.cpp"           /* for mach table look up */
+#include "gravity.cpp"        /* for gravity table look up */
 
-using namespace std;
+using std::map;               /* for just map in std */
+using std::tuple;             /* for just tuple in std */
 
 
 /*******************************************************************
@@ -61,6 +66,59 @@ double calcAngle(double dx, double dy)
    return atan2(dx, dy);
 }
 
+/********************************************************************
+ *  SEARCH TABLE
+ *  A function that will take in a key not contained in the table
+ *  as a parameter and will return the keys just before and
+ *  just after the not found key's theoretical place.
+ *
+ *  In other words, of all the keys that are lower than the key
+ *  not contained in the table, we want to return the greatest
+ *  which must be the key just under the not contained key.
+ *
+ *  And of all the keys that are greater than the key not
+ *  contained in the table, we want to return the least
+ *  which must be the key just above the not contained key
+ *********************************************************************/
+tuple<double, double> searchTable(double nckey, map<double, double> table)
+{
+   // assign the map iterator to the begining of the table
+   map<double, double>::iterator it = table.begin();
+   
+   // assign high and low values to the first and last keys in the map
+   double high = table.begin()->first;
+   double low = table.end()->first;
+   
+   // Loop through the map
+   while (it != table.end())
+   {
+      // If the current key is less than the not contained key
+      if (it->first < nckey)
+      {
+         // and it is greater than the current low
+         if (it->first > low)
+         {
+            // It becomes the new low
+            low = it->first;
+         }
+      }
+      else // the current key must be greater than the not contained key
+      {
+         // if it is less than the current high
+         if (it->first < high)
+         {
+            // it becomes the new high
+            high = it->first;
+         }
+      }
+   }
+   
+   tuple<double, double> keys (low, high);
+   
+   return keys;
+}
+
+
 /*********************************************************************
  *  LOOK UP AIR DENSITY
  *  A function to look up the density of the air at a given
@@ -73,14 +131,21 @@ double luAirDensity(double altitude)
 {
    if (airDensityValues.find(altitude) == airDensityValues.end())
    {
-      // not found so first get the previous point and the next point.
+      // Find the value just under the missing key and the value just over
+      tuple <double, double> keys = searchTable(altitude, airDensityValues);
       
-      // do string interpolation here
-      return 0.0;
+      // Use those keys to get the two points around the missing point
+      double x0 = get<0>(keys);
+      double y0 = airDensityValues[x0];
+      double x1 = get<1>(keys);
+      double y1 = airDensityValues[x1];
+      double x = altitude;
+      
+      // Interpolate for y
+      return interpolate(x0, y0, x1, y1, x);
    }
    else
    {
-      cout << airDensityValues[altitude];
       return airDensityValues[altitude];
    }
 }
@@ -93,10 +158,27 @@ double luAirDensity(double altitude)
  *
  *  The look up tables are imported from mach.h
  *********************************************************************/
-double luMach()
+double luMach(double altitude)
 {
-   // look up mach here
-   return 0.0;
+   if (machValues.find(altitude) == machValues.end())
+   {
+      // Find the value just under the missing key and the value just over
+      tuple <double, double> keys = searchTable(altitude, machValues);
+      
+      // Use those keys to get the two points around the missing point
+      double x0 = get<0>(keys);
+      double y0 = machValues[x0];
+      double x1 = get<1>(keys);
+      double y1 = machValues[x1];
+      double x = altitude;
+      
+      // Interpolate for y
+      return interpolate(x0, y0, x1, y1, x);
+   }
+   else
+   {
+      return machValues[altitude];
+   }
 }
 
 
@@ -107,10 +189,27 @@ double luMach()
  *
  *  The look up tables are imported from gravity.h
  *********************************************************************/
-double luGravity()
+double luGravity(double altitude)
 {
-   // look up gravity here
-   return 0.0;
+   if (gravityValues.find(altitude) == gravityValues.end())
+   {
+      // Find the value just under the missing key and the value just over
+      tuple <double, double> keys = searchTable(altitude, gravityValues);
+      
+      // Use those keys to get the two points around the missing point
+      double x0 = get<0>(keys);
+      double y0 = gravityValues[x0];
+      double x1 = get<1>(keys);
+      double y1 = gravityValues[x1];
+      double x = altitude;
+      
+      // Interpolate for y
+      return interpolate(x0, y0, x1, y1, x);
+   }
+   else
+   {
+      return gravityValues[altitude];
+   }
 }
 
 
@@ -120,16 +219,32 @@ double luGravity()
  *
  * The look up tables are imported from drag.h
  *********************************************************************/
-double luDragCoeff()
+double luDragCoeff(double mach)
 {
-   // look up drag coefficient here
-   return 0.0;
+   if (dragValues.find(mach) == dragValues.end())
+   {
+      // Find the value just under the missing key and the value just over
+      tuple <double, double> keys = searchTable(mach, dragValues);
+      
+      // Use those keys to get the two points around the missing point
+      double x0 = get<0>(keys);
+      double y0 = dragValues[x0];
+      double x1 = get<1>(keys);
+      double y1 = dragValues[x1];
+      double x = mach;
+      
+      // Interpolate for y
+      return interpolate(x0, y0, x1, y1, x);
+   }
+   else
+   {
+      return dragValues[mach];
+   }
 }
 
 
 int main()
 {
-   cout << "Hello World!";
    luAirDensity(1000);
 }
 
