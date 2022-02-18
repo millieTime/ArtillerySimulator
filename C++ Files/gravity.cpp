@@ -1,3 +1,8 @@
+/*****************************************************
+ * GRAVITY
+ * A file to store the gravity look up values.
+ ******************************************************/
+
 //
 //  gravity.cpp
 //  ArtillerySimulatorPrototype

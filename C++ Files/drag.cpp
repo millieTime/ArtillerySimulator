@@ -1,3 +1,9 @@
+/*****************************************************
+ * DRAG
+ * A file to store the drag coefficient look up
+ * values.
+ ******************************************************/
+
 //
 //  drag.cpp
 //  ArtillerySimulatorPrototype
