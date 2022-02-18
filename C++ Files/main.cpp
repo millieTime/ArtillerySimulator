@@ -259,15 +259,16 @@ void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
    // Calculate current time from previous time.
    double accelerationX = 0.0;
    double accelerationY = 0.0;
-   double dragAcceleration = computeAcceleration(SHELL_MASS,
-                                                 computeDrag(luDragCoeff(luMach(previousValues[Y])),
-                                                             luAirDensity(previousValues[Y]),
-                                                             hypotenuseFromComponents(previousValues[DX], previousValues[DY]),
-                                                             circleAreaFromDiameter(SHELL_DIAMETER)));
+   double altitude = previousValues[Y];
+   double velocityX = previousValues[DX];
+   double velocityY = previousValues[DY];
+   double computedDrag = computeDrag(luDragCoeff(luMach(altitude)), luAirDensity(altitude),
+                                     hypotenuseFromComponents(velocityX, velocityY),
+                                     circleAreaFromDiameter(SHELL_DIAMETER));
+   double dragAcceleration = computeAcceleration(SHELL_MASS, computedDrag);
    
-   accelerationX = calcHorComp(dragAcceleration, calcAngle(previousValues[DX], previousValues[DY]));
-   accelerationY = calcVertComp(dragAcceleration,
-                                calcAngle(previousValues[DX], previousValues[DY]) - luGravity(previousValues[Y]));
+   accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY));
+   accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) - luGravity(altitude));
 
    currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
    currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
