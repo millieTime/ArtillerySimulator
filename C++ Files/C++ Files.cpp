@@ -460,69 +460,71 @@ void computeNewMotion(long double(&previousValues)[5], long double(&currentValue
  **************************************/
 int main()
 {
-
-   // Get user input.
-   cout << "What is the angle of the howitzer where 0 is up ? ";
-   long double angleDegrees = 0;
-   cin >> angleDegrees;
-   long double angleRadians = radiansFromDegrees(angleDegrees);
-
-   // Initialize the two arrays of shell motion information.
-   // time, x, y, dx, dy, 
-   long double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
-   long double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
-
-   long double values1[5] = { 0, 0, 0, initialDX, initialDY};
-   long double values2[5] = { 0, 0, 0, initialDX, initialDY};
-   bool use1 = true;
-
-   // Let's get crackin!
-   // Keep mathing until one altitude is less than or equal to zero.
-   while (values1[Y] >= 0 and values2[Y] >= 0)
+   while (true)
    {
+      // Get user input.
+      cout << "What is the angle of the howitzer where 0 is up ? ";
+      long double angleDegrees = 0;
+      cin >> angleDegrees;
+      long double angleRadians = radiansFromDegrees(angleDegrees);
+
+      // Initialize the two arrays of shell motion information.
+      // time, x, y, dx, dy, 
+      long double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
+      long double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
+
+      long double values1[5] = { 0, 0, 0, initialDX, initialDY };
+      long double values2[5] = { 0, 0, 0, initialDX, initialDY };
+      bool use1 = true;
+
+      // Let's get crackin!
+      // Keep mathing until one altitude is less than or equal to zero.
+      while (values1[Y] >= 0 and values2[Y] >= 0)
+      {
+         if (use1)
+         {
+            computeNewMotion(values1, values2);
+         }
+         else
+         {
+            computeNewMotion(values2, values1);
+         }
+         // Switch to using the other values next time.
+         use1 = !use1;
+      }
+
+      // Okay, at this point one of the value arrays is for a negative altitude
+      // and the other is for a positive or zero altitude.
+      // values1 will be the negative if use1, otherwise it's values2
+      long double distance = 0.0; //m
+      long double time = 0.0;     //s
       if (use1)
       {
-         computeNewMotion(values1, values2);
+         if (values2[Y] == 0)
+         {
+            distance = values2[X];
+            time = values2[TIME];
+         }
+         else
+         {
+            distance = interpolate(values2[Y], values2[X], values1[Y], values1[X], 0.0);
+            time = interpolate(values2[Y], values2[TIME], values1[Y], values1[TIME], 0.0);
+         }
       }
       else
       {
-         computeNewMotion(values2, values1);
+         if (values1[Y] == 0)
+         {
+            distance = values1[X];
+            time = values1[TIME];
+         }
+         else
+         {
+            distance = interpolate(values1[Y], values1[X], values2[Y], values2[X], 0.0);
+            time = interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
+         }
       }
-      // Switch to using the other values next time.
-      use1 = !use1;
+      cout << fixed << setprecision(1);
+      cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s";
    }
-
-   // Okay, at this point one of the value arrays is for a negative altitude
-   // and the other is for a positive or zero altitude.
-   // values1 will be the negative if use1, otherwise it's values2
-   long double distance = 0.0; //m
-   long double time = 0.0;     //s
-   if (use1)
-   {
-      if (values2[Y] == 0)
-      {
-         distance = values2[X];
-         time = values2[TIME];
-      }
-      else
-      {
-         distance = interpolate(values2[Y], values2[X], values1[Y], values1[X], 0.0);
-         time = interpolate(values2[Y], values2[TIME], values1[Y], values1[TIME], 0.0);
-      }
-   }
-   else
-   {
-      if (values1[Y] == 0)
-      {
-         distance = values1[X];
-         time = values1[TIME];
-      }
-      else
-      {
-         distance = interpolate(values1[Y], values1[X], values2[Y], values2[X], 0.0);
-         time = interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
-      }
-   }
-   cout << fixed << setprecision(1);
-   cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s";
 }
