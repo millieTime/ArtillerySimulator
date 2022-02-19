@@ -1,23 +1,26 @@
 // C++ Files.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <cmath>              /* for sqrt()*/
-#include <iostream>           /* for io*/
+#include <cmath>              /* for sqrt() */
+#include <iostream>           /* for io */
+#include<iomanip>             /* for setprecision */
 #include <map>                /* for map */
 #include <tuple>              /* for get() */
 
 using std::map;               /* for just map in std */
 using std::tuple;             /* for just tuple in std */
-using std::get;               /* for get() in std*/
+using std::get;               /* for get() in std */
 using std::cout;              /* for screen output */
 using std::cin;               /* for user input */
+using std::fixed;             /* for rounding output */
+using std::setprecision;      /* for rounding output */
 
 // Define some constants of the shell.
 const long double M_PI = 3.14159265358979323846;
 const long double INITIAL_VELOCITY = 827.0;   // m/s
 const long double SHELL_MASS       = 46.7;    // kg
 const long double SHELL_DIAMETER   = 0.15489; // m
-const long double ELAPSED_TIME     = 0.01;    // s
+const long double ELAPSED_TIME     = 0.06425;    // s
 enum motionIndexes { TIME, X, Y, DX, DY };
 map <long double, long double> dragValues
 {
@@ -520,5 +523,6 @@ int main()
          time = interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
       }
    }
+   cout << fixed << setprecision(1);
    cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s";
 }
