@@ -17,7 +17,7 @@ const long double M_PI = 3.14159265358979323846;
 const long double INITIAL_VELOCITY = 827.0;   // m/s
 const long double SHELL_MASS       = 46.7;    // kg
 const long double SHELL_DIAMETER   = 0.15489; // m
-const long double ELAPSED_TIME     = 0.01;    // s
+const long double ELAPSED_TIME     = 1.0;    // s
 enum motionIndexes { TIME, X, Y, DX, DY };
 map <long double, long double> dragValues
 {
