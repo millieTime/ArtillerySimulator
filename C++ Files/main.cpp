@@ -1,26 +1,191 @@
 // C++ Files.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include <iostream>
-#include <cmath>              /* for atan() */
+#include <cmath>              /* for sqrt()*/
+#include <iostream>           /* for io*/
 #include <map>                /* for map */
-#include "airDensity.cpp"     /* for air density table look up */
-#include "drag.cpp"           /* for drag coefficient table look up */
-#include "mach.cpp"           /* for mach table look up */
-#include "gravity.cpp"        /* for gravity table look up */
-#include "Preston's Functions.cpp" /* For Preston's functions */
+#include <tuple>              /* for get() */
 
 using std::map;               /* for just map in std */
 using std::tuple;             /* for just tuple in std */
+using std::get;               /* for get() in std*/
 using std::cout;              /* for screen output */
 using std::cin;               /* for user input */
 
 // Define some constants of the shell.
-const double INITIAL_VELOCITY = 827.0;   // m/s
-const double SHELL_MASS       = 46.7;    // kg
-const double SHELL_DIAMETER   = 0.15489; // m
-const double ELAPSED_TIME     = 0.5;     // s
+const long double M_PI = 3.14159265358979323846;
+const long double INITIAL_VELOCITY = 827.0;   // m/s
+const long double SHELL_MASS       = 46.7;    // kg
+const long double SHELL_DIAMETER   = 0.15489; // m
+const long double ELAPSED_TIME     = 0.01;    // s
 enum motionIndexes { TIME, X, Y, DX, DY };
+map <long double, long double> dragValues
+{
+   {0.300,   0.1629},
+   {0.500,   0.1659},
+   {0.700,   0.2031},
+   {0.890,   0.2597},
+   {0.920,   0.3010},
+   {0.960,   0.3287},
+   {0.980,   0.4002},
+   {1.000,   0.4258},
+   {1.020,   0.4335},
+   {1.060,   0.4483},
+   {1.240,   0.4064},
+   {1.530,   0.3663},
+   {1.990,   0.2897},
+   {2.870,   0.2297},
+   {2.890,   0.2306},
+   {5.000,   0.2656}
+};
+map <long double, long double> gravityValues
+{
+   {0,      9.807},
+   {1000,   9.804},
+   {2000,   9.801},
+   {3000,   9.797},
+   {4000,   9.794},
+   {5000,   9.791},
+   {6000,   9.788},
+   {7000,   9.785},
+   {8000,   9.782},
+   {9000,   9.779},
+   {10000,  9.776},
+   {15000,  9.761},
+   {20000,  9.745},
+   {25000,  9.730}
+};
+map <long double, long double> machValues
+{
+   {0,      340},
+   {1000,   336},
+   {2000,   332},
+   {3000,   328},
+   {4000,   324},
+   {5000,   320},
+   {6000,   316},
+   {7000,   312},
+   {8000,   308},
+   {9000,   303},
+   {10000,  299},
+   {15000,  295},
+   {20000,  295},
+   {25000,  295},
+   {30000,  305},
+   {40000,  324}
+};
+map <long double, long double> airDensityValues
+{
+   {0.0,      1.2250000},
+   {1000.0,   1.1120000},
+   {2000.0,   1.0070000},
+   {3000.0,   0.9093000},
+   {4000.0,   0.8194000},
+   {5000.0,   0.7364000},
+   {6000.0,   0.6601000},
+   {7000.0,   0.5900000},
+   {8000.0,   0.5258000},
+   {9000.0,   0.4671000},
+   {10000.0,  0.4135000},
+   {15000.0,  0.1948000},
+   {20000.0,  0.0889100},
+   {25000.0,  0.0400800},
+   {30000.0,  0.0184100},
+   {40000.0,  0.0039960},
+   {50000.0,  0.0010270},
+   {60000.0,  0.0003097},
+   {70000.0,  0.0000828},
+   {80000.0,  0.0000185}
+};
+
+/******************************************************
+ * COMPUTE DRAG
+ * Computes the drag force in Newtons acting
+ * on an object using d = 1/2 * c * p * v^2 * a
+ ******************************************************/
+long double computeDrag(long double dragCoeff, long double density, long double velocity, long double area)
+{
+   return 0.5 * dragCoeff * density * velocity * velocity * area;
+}
+
+/******************************************************
+* CIRCLE AREA FROM RADIUS
+* Computes the area of a circle given the circle's
+* radius using a = PI * r * r
+*******************************************************/
+long double circleAreaFromRadius(long double radius)
+{
+   return M_PI * radius * radius;
+}
+
+/******************************************************
+* CIRCLE AREA FROM DIAMETER
+* Computes the area of a circle given the circle's
+* diameter using a = PI * (d/2) * (d/2)
+*******************************************************/
+long double circleAreaFromDiameter(long double diameter)
+{
+   long double radius = diameter / 2.0;
+   return circleAreaFromRadius(radius);
+}
+
+/******************************************************
+* COMPUTE ACCELERATION
+* Computes the acceleration of an object given its mass
+* and the force acting on it using a = f / m
+*******************************************************/
+long double computeAcceleration(long double mass, long double force)
+{
+   return force / mass;
+}
+
+/******************************************************
+* DEGREES FROM RADIANS
+* Converts radians to degrees using d = 360 * r / (2 * PI)
+*******************************************************/
+long double degreesFromRadians(long double radians)
+{
+   return 360.0 * radians / (2.0 * M_PI);
+}
+
+/******************************************************
+* RADIANS FROM DEGREES
+* Converts degrees to radians using r = d * 2 * PI / 360
+*******************************************************/
+long double radiansFromDegrees(long double degrees)
+{
+   return degrees * 2.0 * M_PI / 360.0;
+}
+
+/******************************************************
+* HYPOTENUSE FROM COMPONENTS
+* Computes the magnitude of the hypotenuse from the
+* given orthogonal components using c = sqrt(a^2 + b^2)
+*******************************************************/
+long double hypotenuseFromComponents(long double a, long double b)
+{
+   return sqrt(a * a + b * b);
+}
+
+/******************************************************
+* INTERPOLATE
+* Performs linear interpolation given two points (x0, y0)
+* and (x1, y1) and a known x-value using
+*  (y1-y0)/(x1-x0) = (yU-y0)/(xU-x0)
+* where xU is the known x-value.
+*******************************************************/
+long double interpolate(long double x0, long double y0, long double x1, long double y1, long double current_x)
+{
+   if (y1 == y0)
+   {
+      // They gave us one point twice, or a constant function.
+      return y1;
+   }
+   else
+   {
+      return (y1 - y0) * (current_x - x0) / (x1 - x0) + y0;
+   }
+}
 
 /*******************************************************************
  *  CALCULATE VERTICAL COMPONENT
@@ -32,7 +197,7 @@ enum motionIndexes { TIME, X, Y, DX, DY };
  *    s = overall speed (m/s)
  *    a = directon of travel where 0 is pointing up (radians)
  * *******************************************************************/
-double calcVertComp(double speed, double angle)
+long double calcVertComp(long double speed, long double angle)
 {
    return speed * cos(angle);
 }
@@ -47,7 +212,7 @@ double calcVertComp(double speed, double angle)
  *    a = directon of travel where 0 is pointing up (radians)
  * *******************************************************************/
 
-double calcHorComp(double speed, double angle)
+long double calcHorComp(long double speed, long double angle)
 {
    return speed * sin(angle);
 }
@@ -63,7 +228,7 @@ double calcHorComp(double speed, double angle)
  *    dx = horizontal component of speed (m/s)
  *    dy = vertical component of speed (m/s)
  *********************************************************************/
-double calcAngle(double dx, double dy)
+long double calcAngle(long double dx, long double dy)
 {
    return atan2(dx, dy);
 }
@@ -82,17 +247,18 @@ double calcAngle(double dx, double dy)
  *  contained in the table, we want to return the least
  *  which must be the key just above the not contained key
  *********************************************************************/
-tuple<double, double> searchTable(double nckey, map<double, double> table)
+tuple<long double, long double> searchTable(long double nckey, map<long double, long double> table)
 {
    // assign the map iterator to the begining of the table
-   map<double, double>::iterator it = table.begin();
+   map<long double, long double>::iterator it = table.begin();
    
    // assign high and low values to the first and last keys in the map
-   double high = table.begin()->first;
-   double low = table.end()->first;
+   long double high = table.begin()->first;
+   long double low = table.begin()->first;
    
    // Loop through the map
-   while (it != table.end())
+   bool searching = true;
+   while (it != table.end() && searching)
    {
       // If the current key is less than the not contained key
       if (it->first < nckey)
@@ -104,18 +270,18 @@ tuple<double, double> searchTable(double nckey, map<double, double> table)
             low = it->first;
          }
       }
-      else // the current key must be greater than the not contained key
+      else
       {
-         // if it is less than the current high
-         if (it->first < high)
-         {
-            // it becomes the new high
-            high = it->first;
-         }
+         // Our previous iterator was the highest value below the one we want.
+         // The current iterator is the lowest value above the one we want.
+         // That means we're done searching.
+         high = it->first;
+         searching = false;
       }
+      it++;
    }
    
-   tuple<double, double> keys (low, high);
+   tuple<long double, long double> keys (low, high);
    
    return keys;
 }
@@ -129,19 +295,19 @@ tuple<double, double> searchTable(double nckey, map<double, double> table)
  *
  *  The look up tables are imported from airDensity.h
  *********************************************************************/
-double luAirDensity(double altitude)
+long double luAirDensity(long double altitude)
 {
    if (airDensityValues.find(altitude) == airDensityValues.end())
    {
       // Find the value just under the missing key and the value just over
-      tuple <double, double> keys = searchTable(altitude, airDensityValues);
+      tuple <long double, long double> keys = searchTable(altitude, airDensityValues);
       
       // Use those keys to get the two points around the missing point
-      double x0 = get<0>(keys);
-      double y0 = airDensityValues[x0];
-      double x1 = get<1>(keys);
-      double y1 = airDensityValues[x1];
-      double x = altitude;
+      long double x0 = get<0>(keys);
+      long double y0 = airDensityValues[x0];
+      long double x1 = get<1>(keys);
+      long double y1 = airDensityValues[x1];
+      long double x = altitude;
       
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
@@ -160,19 +326,19 @@ double luAirDensity(double altitude)
  *
  *  The look up tables are imported from mach.h
  *********************************************************************/
-double luMach(double altitude)
+long double luMach(long double altitude)
 {
    if (machValues.find(altitude) == machValues.end())
    {
       // Find the value just under the missing key and the value just over
-      tuple <double, double> keys = searchTable(altitude, machValues);
+      tuple <long double, long double> keys = searchTable(altitude, machValues);
       
       // Use those keys to get the two points around the missing point
-      double x0 = get<0>(keys);
-      double y0 = machValues[x0];
-      double x1 = get<1>(keys);
-      double y1 = machValues[x1];
-      double x = altitude;
+      long double x0 = get<0>(keys);
+      long double y0 = machValues[x0];
+      long double x1 = get<1>(keys);
+      long double y1 = machValues[x1];
+      long double x = altitude;
       
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
@@ -191,19 +357,19 @@ double luMach(double altitude)
  *
  *  The look up tables are imported from gravity.h
  *********************************************************************/
-double luGravity(double altitude)
+long double luGravity(long double altitude)
 {
    if (gravityValues.find(altitude) == gravityValues.end())
    {
       // Find the value just under the missing key and the value just over
-      tuple <double, double> keys = searchTable(altitude, gravityValues);
+      tuple <long double, long double> keys = searchTable(altitude, gravityValues);
       
       // Use those keys to get the two points around the missing point
-      double x0 = get<0>(keys);
-      double y0 = gravityValues[x0];
-      double x1 = get<1>(keys);
-      double y1 = gravityValues[x1];
-      double x = altitude;
+      long double x0 = get<0>(keys);
+      long double y0 = gravityValues[x0];
+      long double x1 = get<1>(keys);
+      long double y1 = gravityValues[x1];
+      long double x = altitude;
       
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
@@ -221,19 +387,19 @@ double luGravity(double altitude)
  *
  * The look up tables are imported from drag.h
  *********************************************************************/
-double luDragCoeff(double mach)
+long double luDragCoeff(long double mach)
 {
    if (dragValues.find(mach) == dragValues.end())
    {
       // Find the value just under the missing key and the value just over
-      tuple <double, double> keys = searchTable(mach, dragValues);
+      tuple <long double, long double> keys = searchTable(mach, dragValues);
       
       // Use those keys to get the two points around the missing point
-      double x0 = get<0>(keys);
-      double y0 = dragValues[x0];
-      double x1 = get<1>(keys);
-      double y1 = dragValues[x1];
-      double x = mach;
+      long double x0 = get<0>(keys);
+      long double y0 = dragValues[x0];
+      long double x1 = get<1>(keys);
+      long double y1 = dragValues[x1];
+      long double x = mach;
       
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
@@ -255,19 +421,20 @@ double luDragCoeff(double mach)
  * and the velocity-acceleration formula
  * v1 = v0 + a*t
  ************************************************************/
-void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
+void computeNewMotion(long double(&previousValues)[5], long double(&currentValues)[5])
 {
    // Calculate previous acceleration from previous position, velocity, and constants
-   double altitude = previousValues[Y];
-   double velocityX = previousValues[DX];
-   double velocityY = previousValues[DY];
-   double computedDrag = computeDrag(luDragCoeff(luMach(altitude)), luAirDensity(altitude),
-                                     hypotenuseFromComponents(velocityX, velocityY),
+   long double altitude = previousValues[Y];
+   long double velocityX = previousValues[DX];
+   long double velocityY = previousValues[DY];
+   long double speed = hypotenuseFromComponents(velocityX, velocityY);
+   long double computedDrag = computeDrag(luDragCoeff(speed / luMach(altitude)), luAirDensity(altitude),
+                                     speed,
                                      circleAreaFromDiameter(SHELL_DIAMETER));
-   double dragAcceleration = computeAcceleration(SHELL_MASS, computedDrag);
+   long double dragAcceleration = computeAcceleration(SHELL_MASS, computedDrag);
    
-   double accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY));
-   double accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) - luGravity(altitude));
+   long double accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY) + M_PI);
+   long double accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) + M_PI) - luGravity(altitude);
   
   
    // Calculate current velocity from previous acceleration and velocity.
@@ -290,25 +457,25 @@ void computeNewMotion(double(&previousValues)[5], double(&currentValues)[5])
  **************************************/
 int main()
 {
-   
+
    // Get user input.
    cout << "What is the angle of the howitzer where 0 is up ? ";
-   double angleDegrees = 0;
+   long double angleDegrees = 0;
    cin >> angleDegrees;
-   double angleRadians = radiansFromDegrees(angleDegrees);
+   long double angleRadians = radiansFromDegrees(angleDegrees);
 
    // Initialize the two arrays of shell motion information.
    // time, x, y, dx, dy, 
-   double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
-   double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
+   long double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
+   long double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
 
-   double values1[5] = { 0, 0, 0, initialDX, initialDY};
-   double values2[5] = { 0, 0, 0, initialDX, initialDY};
+   long double values1[5] = { 0, 0, 0, initialDX, initialDY};
+   long double values2[5] = { 0, 0, 0, initialDX, initialDY};
    bool use1 = true;
 
    // Let's get crackin!
    // Keep mathing until one altitude is less than or equal to zero.
-   while (values1[Y] > 0 and values2[Y] > 0)
+   while (values1[Y] >= 0 and values2[Y] >= 0)
    {
       if (use1)
       {
@@ -322,17 +489,17 @@ int main()
       use1 = !use1;
    }
 
-   // Okay, at this point one of the value arrays is for a positive altitude
-   // and the other is for a negative or zero altitude.
-   // values1 will be the negative or zero one if use1, otherwise it's values2
-   double distance = 0.0; //m
-   double time = 0.0;     //s
+   // Okay, at this point one of the value arrays is for a negative altitude
+   // and the other is for a positive or zero altitude.
+   // values1 will be the negative if use1, otherwise it's values2
+   long double distance = 0.0; //m
+   long double time = 0.0;     //s
    if (use1)
    {
-      if (values1[Y] == 0)
+      if (values2[Y] == 0)
       {
-         distance = values1[X];
-         time = values1[TIME];
+         distance = values2[X];
+         time = values2[TIME];
       }
       else
       {
@@ -342,10 +509,10 @@ int main()
    }
    else
    {
-      if (values2[Y] == 0)
+      if (values1[Y] == 0)
       {
-         distance = values2[X];
-         time = values2[TIME];
+         distance = values1[X];
+         time = values1[TIME];
       }
       else
       {
