@@ -525,6 +525,6 @@ int main()
          }
       }
       cout << fixed << setprecision(1);
-      cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s";
+      cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s\n";
    }
 }
