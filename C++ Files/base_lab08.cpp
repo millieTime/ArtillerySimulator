@@ -1,9 +1,7 @@
-// C++ Files.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <cmath>              /* for sqrt() */
 #include <iostream>           /* for io */
-#include<iomanip>             /* for setprecision */
+#include <iomanip>             /* for setprecision */
 #include <map>                /* for map */
 #include <tuple>              /* for get() */
 
@@ -18,9 +16,9 @@ using std::setprecision;      /* for rounding output */
 // Define some constants of the shell.
 const long double M_PI = 3.14159265358979323846;
 const long double INITIAL_VELOCITY = 827.0;   // m/s
-const long double SHELL_MASS       = 46.7;    // kg
-const long double SHELL_DIAMETER   = 0.15489; // m
-const long double ELAPSED_TIME     = 0.06425;    // s
+const long double SHELL_MASS = 46.7;    // kg
+const long double SHELL_DIAMETER = 0.15489; // m
+const long double ELAPSED_TIME = 0.06425;    // s
 enum motionIndexes { TIME, X, Y, DX, DY };
 map <long double, long double> dragValues
 {
@@ -254,11 +252,11 @@ tuple<long double, long double> searchTable(long double nckey, map<long double, 
 {
    // assign the map iterator to the begining of the table
    map<long double, long double>::iterator it = table.begin();
-   
+
    // assign high and low values to the first and last keys in the map
    long double high = table.begin()->first;
    long double low = table.begin()->first;
-   
+
    // Loop through the map
    bool searching = true;
    while (it != table.end() && searching)
@@ -283,9 +281,9 @@ tuple<long double, long double> searchTable(long double nckey, map<long double, 
       }
       it++;
    }
-   
-   tuple<long double, long double> keys (low, high);
-   
+
+   tuple<long double, long double> keys(low, high);
+
    return keys;
 }
 
@@ -304,14 +302,14 @@ long double luAirDensity(long double altitude)
    {
       // Find the value just under the missing key and the value just over
       tuple <long double, long double> keys = searchTable(altitude, airDensityValues);
-      
+
       // Use those keys to get the two points around the missing point
       long double x0 = get<0>(keys);
       long double y0 = airDensityValues[x0];
       long double x1 = get<1>(keys);
       long double y1 = airDensityValues[x1];
       long double x = altitude;
-      
+
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
    }
@@ -335,14 +333,14 @@ long double luMach(long double altitude)
    {
       // Find the value just under the missing key and the value just over
       tuple <long double, long double> keys = searchTable(altitude, machValues);
-      
+
       // Use those keys to get the two points around the missing point
       long double x0 = get<0>(keys);
       long double y0 = machValues[x0];
       long double x1 = get<1>(keys);
       long double y1 = machValues[x1];
       long double x = altitude;
-      
+
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
    }
@@ -366,14 +364,14 @@ long double luGravity(long double altitude)
    {
       // Find the value just under the missing key and the value just over
       tuple <long double, long double> keys = searchTable(altitude, gravityValues);
-      
+
       // Use those keys to get the two points around the missing point
       long double x0 = get<0>(keys);
       long double y0 = gravityValues[x0];
       long double x1 = get<1>(keys);
       long double y1 = gravityValues[x1];
       long double x = altitude;
-      
+
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
    }
@@ -396,14 +394,14 @@ long double luDragCoeff(long double mach)
    {
       // Find the value just under the missing key and the value just over
       tuple <long double, long double> keys = searchTable(mach, dragValues);
-      
+
       // Use those keys to get the two points around the missing point
       long double x0 = get<0>(keys);
       long double y0 = dragValues[x0];
       long double x1 = get<1>(keys);
       long double y1 = dragValues[x1];
       long double x = mach;
-      
+
       // Interpolate for y
       return interpolate(x0, y0, x1, y1, x);
    }
@@ -419,8 +417,8 @@ long double luDragCoeff(long double mach)
  * current motion values so that it can save memory by only
  * updating the current motion values instead of returning a
  * new set of values. Uses prebuilt functions, as well as
- * the distance-acceleration formula 
- * d1 = d0 + v*t + 1/2 * a * t^2 
+ * the distance-acceleration formula
+ * d1 = d0 + v*t + 1/2 * a * t^2
  * and the velocity-acceleration formula
  * v1 = v0 + a*t
  ************************************************************/
@@ -432,14 +430,14 @@ void computeNewMotion(long double(&previousValues)[5], long double(&currentValue
    long double velocityY = previousValues[DY];
    long double speed = hypotenuseFromComponents(velocityX, velocityY);
    long double computedDrag = computeDrag(luDragCoeff(speed / luMach(altitude)), luAirDensity(altitude),
-                                     speed,
-                                     circleAreaFromDiameter(SHELL_DIAMETER));
+      speed,
+      circleAreaFromDiameter(SHELL_DIAMETER));
    long double dragAcceleration = computeAcceleration(SHELL_MASS, computedDrag);
-   
+
    long double accelerationX = calcHorComp(dragAcceleration, calcAngle(velocityX, velocityY) + M_PI);
    long double accelerationY = calcVertComp(dragAcceleration, calcAngle(velocityX, velocityY) + M_PI) - luGravity(altitude);
-  
-  
+
+
    // Calculate current velocity from previous acceleration and velocity.
    currentValues[DX] = previousValues[DX] + accelerationX * ELAPSED_TIME;
    currentValues[DY] = previousValues[DY] + accelerationY * ELAPSED_TIME;
@@ -458,71 +456,73 @@ void computeNewMotion(long double(&previousValues)[5], long double(&currentValue
  * and how far it travels horizontally based on the user's input
  * of what angle the Howitzer is aimed at (where zero degrees is up).
  **************************************/
-int main()
+int other_main()
 {
-
-   // Get user input.
-   cout << "What is the angle of the howitzer where 0 is up ? ";
-   long double angleDegrees = 0;
-   cin >> angleDegrees;
-   long double angleRadians = radiansFromDegrees(angleDegrees);
-
-   // Initialize the two arrays of shell motion information.
-   // time, x, y, dx, dy, 
-   long double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
-   long double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
-
-   long double values1[5] = { 0, 0, 0, initialDX, initialDY};
-   long double values2[5] = { 0, 0, 0, initialDX, initialDY};
-   bool use1 = true;
-
-   // Let's get crackin!
-   // Keep mathing until one altitude is less than or equal to zero.
-   while (values1[Y] >= 0 and values2[Y] >= 0)
+   while (true)
    {
+      // Get user input.
+      cout << "What is the angle of the howitzer where 0 is up ? ";
+      long double angleDegrees = 0;
+      cin >> angleDegrees;
+      long double angleRadians = radiansFromDegrees(angleDegrees);
+
+      // Initialize the two arrays of shell motion information.
+      // time, x, y, dx, dy, 
+      long double initialDX = calcHorComp(INITIAL_VELOCITY, angleRadians);
+      long double initialDY = calcVertComp(INITIAL_VELOCITY, angleRadians);
+
+      long double values1[5] = { 0, 0, 0, initialDX, initialDY };
+      long double values2[5] = { 0, 0, 0, initialDX, initialDY };
+      bool use1 = true;
+
+      // Let's get crackin!
+      // Keep mathing until one altitude is less than or equal to zero.
+      while (values1[Y] >= 0 and values2[Y] >= 0)
+      {
+         if (use1)
+         {
+            computeNewMotion(values1, values2);
+         }
+         else
+         {
+            computeNewMotion(values2, values1);
+         }
+         // Switch to using the other values next time.
+         use1 = !use1;
+      }
+
+      // Okay, at this point one of the value arrays is for a negative altitude
+      // and the other is for a positive or zero altitude.
+      // values1 will be the negative if use1, otherwise it's values2
+      long double distance = 0.0; //m
+      long double time = 0.0;     //s
       if (use1)
       {
-         computeNewMotion(values1, values2);
+         if (values2[Y] == 0)
+         {
+            distance = values2[X];
+            time = values2[TIME];
+         }
+         else
+         {
+            distance = interpolate(values2[Y], values2[X], values1[Y], values1[X], 0.0);
+            time = interpolate(values2[Y], values2[TIME], values1[Y], values1[TIME], 0.0);
+         }
       }
       else
       {
-         computeNewMotion(values2, values1);
+         if (values1[Y] == 0)
+         {
+            distance = values1[X];
+            time = values1[TIME];
+         }
+         else
+         {
+            distance = interpolate(values1[Y], values1[X], values2[Y], values2[X], 0.0);
+            time = interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
+         }
       }
-      // Switch to using the other values next time.
-      use1 = !use1;
+      cout << fixed << setprecision(1);
+      cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s\n";
    }
-
-   // Okay, at this point one of the value arrays is for a negative altitude
-   // and the other is for a positive or zero altitude.
-   // values1 will be the negative if use1, otherwise it's values2
-   long double distance = 0.0; //m
-   long double time = 0.0;     //s
-   if (use1)
-   {
-      if (values2[Y] == 0)
-      {
-         distance = values2[X];
-         time = values2[TIME];
-      }
-      else
-      {
-         distance = interpolate(values2[Y], values2[X], values1[Y], values1[X], 0.0);
-         time = interpolate(values2[Y], values2[TIME], values1[Y], values1[TIME], 0.0);
-      }
-   }
-   else
-   {
-      if (values1[Y] == 0)
-      {
-         distance = values1[X];
-         time = values1[TIME];
-      }
-      else
-      {
-         distance = interpolate(values1[Y], values1[X], values2[Y], values2[X], 0.0);
-         time = interpolate(values1[Y], values1[TIME], values2[Y], values2[TIME], 0.0);
-      }
-   }
-   cout << fixed << setprecision(1);
-   cout << "Distance:\t" << distance << "m\tHang Time:\t" << time << "s";
 }
