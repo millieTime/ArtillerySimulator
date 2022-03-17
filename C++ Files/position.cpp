@@ -10,6 +10,8 @@
 #include "position.h"
 #include <cassert>
 
+double Position::metersFromPixels = 40.0;
+
 /******************************************
 * POINT : non-default constructor
 * create a point in x,y in meters
@@ -18,6 +20,23 @@ Position::Position(double x, double y) : x(0.0), y(0.0)
 {
    setMetersX(x);
    setMetersY(y);
+}
+
+/******************************************
+* POINT: ADD ACCELERATION VELOCITY
+* Adds acceleration and velocity to this
+* point using the equation
+* x1 = x0 + t*vx + 1/2 * ax * t * t
+* y1 = y0 + t*vy + 1/2 * ay * t * t
+******************************************/
+void Position::addAccelerationVelocity(Acceleration accel, Velocity vel, double time)
+{
+   double inertiaX = time * vel.getDX();
+   double inertiaY = time * vel.getDY();
+   double accelX   = 0.5 * accel.getDDX() * time * time;
+   double accelY   = 0.5 * accel.getDDY() * time * time;
+   addMetersX(inertiaX + accelX);
+   addMetersY(inertiaY + accelY);
 }
 
 /******************************************

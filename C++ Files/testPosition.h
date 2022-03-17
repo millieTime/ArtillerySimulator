@@ -29,6 +29,7 @@ public:
       test_Position_SetMeters();
       test_Position_AddPixels();
       test_Position_AddMeters();
+      test_Position_AddAccelerationVelocity();
    }
    
    void test_Position_Default() const
@@ -135,5 +136,20 @@ public:
       assert(pos.getPixelsY() == 13.0);
       assert(pos.getMetersX() == 280.0);
       assert(pos.getMetersY() == 520.0);
+   }  // teardown
+
+   void test_Position_AddAccelerationVelocity() const
+   {
+      //setup
+      Position pos(100, 200);
+      Acceleration a = Acceleration(1, -1);
+      Velocity v = Velocity(3, 4);
+      // exercise
+      pos.addAccelerationVelocity(a, v, 2);
+      // verifiy
+      assert(pos.getMetersX() == 108.0);
+      assert(pos.getMetersY() == 206.0);
+      assert(pos.getPixelsX() == 2);
+      assert(pos.getPixelsY() == 5);
    }  // teardown
 };

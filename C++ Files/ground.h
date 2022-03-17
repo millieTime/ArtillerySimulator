@@ -8,7 +8,7 @@
  ************************************************************************/
 
 #pragma once
-
+//#include "testGround.h"
 #include "position.h"   // for Point
 #include "uiDraw.h"
 
@@ -18,7 +18,10 @@
   ***********************************************************/
 class Ground
 {
-public:  
+public:
+   // Ground test has access to privates of Ground
+   friend class TestGround;
+   
    // the constructor generates the ground
    Ground(const Position &posUpperRight);
    
@@ -45,6 +48,8 @@ public:
    {
       return posTarget;
    }
+   
+   bool hitGround(Position pos) { return true; };
 
 private:
    double * ground;               // elevation of the ground, in pixels 

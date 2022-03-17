@@ -9,15 +9,15 @@
  ************************************************************************/
 #pragma once
 #include "position.h"
-#include "velocity.h"
-#include "acceleration.h"
+#include "velocityMock.h"
+#include "accelerationMock.h"
 #include "angle.h"
-#include "airDensityLookUp.h"
-#include "gravityLookUp.h"
-#include "dragLookUp.h"
-#include "machLookUp.h"
+#include "airDensityLookUpMock.h"
+#include "gravityLookUpMock.h"
+#include "dragLookUpMock.h"
+#include "machLookUpMock.h"
 #include "uiDraw.h"  // for ogstream
-#include <queue>    // for vectors
+#include <vector>    // for vectors
 class TestProjectile;
 
  /*********************************************
@@ -32,35 +32,34 @@ public:
    Projectile();
    Projectile(Position point);
    void move(double time);
-   void fire(Velocity initialVelocity);
+   void fire(VelocityMock initialVelocity);
    void land(bool onTarget);
-   Position getPosition() const;
-   Position getLastPosition() const;
-   double getSpeed() const;
-   Velocity getVelocity() const;
-   Angle getAngle() const;
-   double getArea() const;
-   float getAge() const;
-   bool isLoaded() const;
-   bool isFlying() const;
-   bool isLanded() const;
-   bool isOnTarget() const;
-   void draw(ogstream& gout) const;
-
+   Position getPosition() const { return position; };
+   Position getLastPosition() const { return shadows.at(1); };
+   double getSpeed() const { return velocity.getSpeed(); };
+   VelocityMock getVelocity() const { return velocity; };
+   Angle getAngle() const { return Angle(); };
+   float getAge() const { return age; };
+   bool isLoaded() const { return status == LOADED; };
+   bool isFlying() const { return status == FLYING; };
+   bool isLanded() const { return (status == ON_TARGET || status == OFF_TARGET); };
+   bool isOnTarget() const { return status == ON_TARGET; };
+   void draw(ogstream& gout) const {};
 
 private:
    void shiftShadows();
-   const double WEIGHT = 1.0;
-   const double AREA = 1.0;
+   double getArea() const;
+   const double MASS = 46.7;        // kilograms
+   const double DIAMETER = 0.15489; // meters
    const char NUM_SHADOWS = 6;
-   const GravityLookUp gravity;
-   const AirDensityLookUp airDensity;
-   const MachLookUp mach;
-   const DragLookUp drag;
+   const GravityLookUpMock gravityTable;
+   const AirDensityLookUpMock airDensityTable;
+   const MachLookUpMock machTable;
+   const DragLookUpMock dragTable;
    float age = 0;
-   Velocity velocity;
+   VelocityMock velocity;
    Position position;
    const enum ProjectileStatus{ LOADED, FLYING, ON_TARGET, OFF_TARGET };
    ProjectileStatus status;
-   std::queue<Position> shadows;
+   std::vector<Position> shadows;
 };

@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "acceleration.h"
+#include "velocity.h"
 #include <iostream>
 
 /*********************************************
@@ -28,29 +30,30 @@ public:
    Position& operator = (const Position& pt);
 
    // getters
-   double getMetersX() const { return x;                    }
-   double getMetersY() const { return y;                    }
-   double getPixelsX() const { return x / metersFromPixels; }
-   double getPixelsY() const { return y / metersFromPixels; }
+   virtual double getMetersX() const { return x;                    }
+   virtual double getMetersY() const { return y;                    }
+   virtual double getPixelsX() const { return (int)(x / metersFromPixels); }
+   virtual double getPixelsY() const { return (int)(y / metersFromPixels); }
 
    // setters
-   void setMetersX(double xMeters)       { this->x = xMeters;           }
-   void setMetersY(double yMeters)       { this->y = yMeters;           }
-   void addMetersX(double dxMeters)      { setMetersX(getMetersX() + dxMeters);     }
-   void addMetersY(double dyMeters)      { setMetersY(getMetersY() + dyMeters);     }
-   void setPixelsX(double xPixels)       { this->x = xPixels * metersFromPixels;           }
-   void setPixelsY(double yPixels)       { this->y = yPixels * metersFromPixels;           }
-   void addPixelsX(double dxPixels)      { setPixelsX(getPixelsX() + dxPixels);     }
-   void addPixelsY(double dyPixels)      { setPixelsY(getPixelsY() + dyPixels);     }
+   virtual void addAccelerationVelocity(Acceleration accel, Velocity vel, double time);
+   virtual void setMetersX(double xMeters)  { this->x = xMeters;                      }
+   virtual void setMetersY(double yMeters)  { this->y = yMeters;                      }
+   virtual void addMetersX(double dxMeters) { setMetersX(getMetersX() + dxMeters);    }
+   virtual void addMetersY(double dyMeters) { setMetersY(getMetersY() + dyMeters);    }
+   virtual void setPixelsX(double xPixels)  { this->x = xPixels * metersFromPixels;   }
+   virtual void setPixelsY(double yPixels)  { this->y = yPixels * metersFromPixels;   }
+   virtual void addPixelsX(double dxPixels) { setPixelsX(getPixelsX() + dxPixels);    }
+   virtual void addPixelsY(double dyPixels) { setPixelsY(getPixelsY() + dyPixels);    }
 
    // deal with the ratio of meters to pixels
-   void setZoom(double metersFromPixels)
+   virtual void setZoom(double metersFromPixels)
    {
       this->metersFromPixels = metersFromPixels;
    }
-   double getZoom() const { return metersFromPixels; }
+   virtual double getZoom() const { return metersFromPixels; }
 
-private:
+protected:
    double x;                 // horizontal position
    double y;                 // vertical position
    static double metersFromPixels;
