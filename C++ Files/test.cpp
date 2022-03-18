@@ -23,6 +23,6 @@ void testRunner()
    cout << "Testing. . ." << endl;
    TestPosition().run();
    TestProjectile().run();
-   //estGround().run();
+   TestGround().run();
    cout << "All tests passed" << endl;
 }
