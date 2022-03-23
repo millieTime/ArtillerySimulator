@@ -18,6 +18,6 @@ public:
 
 protected:
    std::tuple<double, double> * table;
-   double get_value(double input) {};
-   double interpolate(double x1, double x2, double y1, double y2, double toFind) {};
+   double get_value(double input) {assert(false); return 0.0;};
+   double interpolate(double x1, double x2, double y1, double y2, double toFind) {assert(false); return 0.0;};
 };

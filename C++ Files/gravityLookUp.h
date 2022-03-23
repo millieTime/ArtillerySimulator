@@ -17,7 +17,7 @@ class GravityLookUp : public LookUp
 {
 public:
    GravityLookUp() {};
-   double getGravity(double altitude) const {};
+   double getGravity(double altitude) const { assert(false); return 0.0;};
 private:
 
 };

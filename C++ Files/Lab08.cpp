@@ -1,7 +1,8 @@
 
 #include "test.h"       // for TESTRUNNER
 using namespace std;
-
+//#include "ground.h"
+#include "position.h"
 /*********************************
  * Initialize the simulation and set it in motion
  *********************************/
@@ -17,6 +18,11 @@ int main(int argc, char** argv)
 #endif // !_WIN32
 {
    testRunner();
+//   Position pos;
+//   pos.setMetersX(10.0);
+//   pos.setMetersY(10.0);
+//   Ground g(pos);
+//   g.reset(pos);
 
    return 0;
 }
