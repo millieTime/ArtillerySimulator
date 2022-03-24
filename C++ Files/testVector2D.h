@@ -7,7 +7,7 @@
  *    Contains the unit tests for the vector2D class
  ************************************************************************/
 
-#include "Vector2DMock.h"
+#include "vector2D.h"
 
 class TestVector
 {
@@ -34,7 +34,7 @@ private:
    void test_getHorComponent()
    {
       // Setup
-      Vector2DMock vector (10.0, 0.0);
+      Vector2D vector (10.0, 0.0);                          // set directly, or use default
       double vert = vector.getVertComponent();
       
       // Exercise
@@ -42,14 +42,14 @@ private:
       
       // Verify
       assert(value == 10.0);
-      assert(vert == 0.0);
+      assert(vert == 0.0);                                  // const already verifies these
    }  // Teardown
    
    // Test the get vertical component method
    void test_getVertComponent()
    {
       // Setup
-      Vector2DMock vector (0.0, 10.0);
+      Vector2D vector (0.0, 10.0);
       double hor = vector.getHorComponent();
       
       // Exercise
@@ -61,10 +61,11 @@ private:
    }  // Teardown
    
    // Test the get magnitude component method
+   // Test empty which is just 0 then test with components
    void test_getMagnitude()
    {
       // Setup
-      Vector2DMock vector;
+      Vector2D vector;
       
       // Exercise
       double value = vector.getMagnitude();
@@ -74,10 +75,11 @@ private:
    }  // Teardown
    
    // Test the get angle component method
+   // make sure it's 0 if the vector is empty then actually test with components
    void test_getAngle()
    {
       // Setup
-      Vector2DMock vector;
+      Vector2D vector;
       
       // Exercise
       Angle value = vector.getAngle();
@@ -90,7 +92,7 @@ private:
    void test_setHorizontalComponent()
    {
       // Setup
-      Vector2DMock vector;
+      Vector2D vector;
       
       // Exercise
       vector.setHorizontal(10.0);
@@ -104,7 +106,7 @@ private:
    void test_setVerticalComponent()
    {
       // Setup
-      Vector2DMock vector;
+      Vector2D vector;
       
       // Exercise
       vector.setVertical(10.0);
@@ -118,7 +120,7 @@ private:
    void test_setMagnitude()
    {
       // Setup
-      Vector2DMock vector;
+      Vector2D vector;
       
       // Exercise
       vector.setMagnitude(10.0);
@@ -131,7 +133,7 @@ private:
    void test_setAngle()
    {
       // Setup
-      Vector2DMock vector;
+      Vector2D vector;
       Angle newAngle(90.0);
       
       // Exercise

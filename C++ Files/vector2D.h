@@ -18,19 +18,22 @@
 class Vector2D
 {
 public:
+   // Make the test class a friend for verification of privates
+   friend class TestVector;
+   
    // Constructors
    Vector2D() : horizontalComponent(0.0), verticalComponent(0.0) {};
    Vector2D(double hor, double vert) : horizontalComponent(hor), verticalComponent(vert)
    {
       // set mag and angle
-      setMagnitude(verticalComponent / cos(angle.getRadian()));
+      setMagnitude(verticalComponent / cos(angle.getRadians()));
       setAngle(atan2(horizontalComponent, verticalComponent));
       
    };
    Vector2D(double magnitudeValue, Angle angleObject) : magnitude(magnitudeValue), angle(angleObject)
    {
-      setHorizontal(magnitude * sin(angle.getRadian()));
-      setVertical(magnitude * cos(angle.getRadian()));
+      setHorizontal(magnitude * sin(angle.getRadians()));
+      setVertical(magnitude * cos(angle.getRadians()));
    };
    
 //   virtual Angle getAngle() { return Angle(); }     // Why do we need the get angle method?

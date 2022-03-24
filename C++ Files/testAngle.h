@@ -7,10 +7,10 @@
  *    Contains the unit tests for the angle class
  ************************************************************************/
 
-#include "angleMock.h"
 #include "angle.h"
 #include <cassert>
-
+#include <iostream>
+using namespace std;
 
 class TestAngle
 {
@@ -22,27 +22,86 @@ public:
    // A method to run all the unit tests
    void run()
    {
+      cout << "Testing Angle: ";
+      test_setDegrees();
+      test_setRadians();
+      test_addDegrees();
+      test_addRadians();
       test_getDegrees();
-      test_getRadian();
-      test_setAngle();
-      test_adjustAngle();
       test_getRadian_positive();
       test_getRadian_negative();
       test_verifyNewAngle_IsValid();
       test_verifyNewAngle_IsInvalid();
       test_convertToValid_max();
       test_convertToValid_min();
-      test_convertToDegrees();
-      test_convertToRadian();
-      
+      test_degreesFromRadians();
+      test_radiansFromDegrees();
+      test_degreesFromXYZero();
+      test_degreesFromXY();
+      cout << "Passed" << endl;
    }
    
 private:
+   // Test the set degrees method
+   void test_setDegrees()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      angle.setDegrees(90.0);
+      
+      // Verify
+      assert(angle.angle == 90.0);
+   }  // Teardown
+   
+   // Test the set radians method
+   void test_setRadians()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      angle.setRadians(M_PI);
+      
+      // Verify
+      assert(angle.angle == 180.0);
+   }  // Teardown
+   
+   // Test the add angle method
+   void test_addDegrees()
+   {
+      // Setup
+      Angle angle;
+      angle.angle = 0.0;
+      
+      // Exercise
+      angle.addDegrees(90.0);
+      
+      // Verify
+      assert(angle.angle == 90.0);
+   }  // Teardown
+   
+   // Test the add radians method
+   void test_addRadians()
+   {
+      // Setup
+      Angle angle;
+      angle.angle = 0.0;
+      
+      // Exercise
+      angle.addRadians(M_PI);
+      
+      // Verify
+      assert(angle.angle == 180.0);
+   }  // Teardown
+   
    // Test the get degrees method
    void test_getDegrees()
    {
       // Setup
-      AngleMock angle(90.0);
+      Angle angle;
+      angle.angle = 90.0;
       
       // Exercise
       double value = angle.getDegrees();
@@ -51,54 +110,15 @@ private:
       assert(value == 90.0);
    }  // Teardown...
    
-   // Test the get radian method
-   void test_getRadian()
-   {
-      // Setup
-      AngleMock angle(180.0);
-      
-      // Exercise
-      double value = angle.getRadian();
-      
-      // Verify
-      assert(value == M_PI);
-   }  // Teardown
-   
-   // Test the set angle method
-   void test_setAngle()
-   {
-      // Setup
-      AngleMock angle;
-      
-      // Exercise
-      angle.setAngle(90.0);
-      
-      // Verify
-      assert(angle.angle == 90.0);
-   }  // Teardown
-   
-   // Test the adjust angle method
-   void test_adjustAngle()
-   {
-      // Setup
-      AngleMock angle (90.0);
-      
-      // Exercise
-      angle.adjustAngle(90.0);
-      
-      // Verify
-      assert(angle.angle == 180.0);
-   }  // Teardown
-   
    // Test the get radians method with a positive angle
    void test_getRadian_positive()
    {
       // Setup
-      AngleMock angle(90.0);
+      Angle angle;
+      angle.angle = 90.0;
       
       // Exercise
-      double value = angle.getRadian();
-      
+      double value = angle.getRadians();
       
       // Verify
       assert(value == (M_PI / 2));
@@ -108,10 +128,11 @@ private:
    void test_getRadian_negative()
    {
       // Setup
-      AngleMock angle(-90.0);
+      Angle angle;
+      angle.angle = -90.0;
       
       // Exercise
-      double value = angle.getRadian();
+      double value = angle.getRadians();
       
       // Verify
       assert(value == -(M_PI / 2));
@@ -121,7 +142,7 @@ private:
    void test_verifyNewAngle_IsValid()
    {
       // Setup
-      AngleMock angle;
+      Angle angle;
       
       // Exercise
       bool value = angle.verifyNewAngle(50.0);
@@ -134,7 +155,7 @@ private:
    void test_verifyNewAngle_IsInvalid()
    {
       // Setup
-      AngleMock angle;
+      Angle angle;
       
       // Exercise
       bool value = angle.verifyNewAngle(91.0);
@@ -154,7 +175,7 @@ private:
    void test_convertToValid_max()
    {
       // Setup
-      AngleMock angle;
+      Angle angle;
       
       // Exercise
       double value = angle.convertToValid(450.0);
@@ -174,7 +195,7 @@ private:
    void test_convertToValid_min()
    {
       // Setup
-      AngleMock angle;
+      Angle angle;
       
       // Exercise
       double value = angle.convertToValid(-450.0);
@@ -184,28 +205,54 @@ private:
    }  // Teardown
    
    // Test the convert to degrees method
-   void test_convertToDegrees()
+   void test_degreesFromRadians()
    {
       // Setup
-      AngleMock angle;
+      Angle angle;
       
       // Exercise
-      double value = angle.convertToDegrees(M_PI);
+      double value = angle.degreesFromRadians(M_PI);
       
       // Verify
       assert(value == 180.0);
    }  // Teardown
    
    // Test the convert to radian method
-   void test_convertToRadian()
+   void test_radiansFromDegrees()
    {
       // Setup
-      AngleMock angle;
+      Angle angle;
       
       // Exercise
-      double value = angle.convertToRadian(180.0);
+      double value = angle.radiansFromDegrees(180.0);
       
       // Verify
       assert(value == M_PI);
+   }  // Teardown
+   
+   // Test the convert from XY method with zeros
+   void test_degreesFromXYZero()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      double value = angle.degreesFromXY(0.0, 0.0);
+      
+      // Verify
+      assert(value == 0.0);
+   }  // Teardown
+   
+   // Test the convert from XY method with values
+   void test_degreesFromXY()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      double value = angle.degreesFromXY(5.0, 5.0);
+      
+      // Verify
+      assert(value == 45.0);
    }  // Teardown
 };

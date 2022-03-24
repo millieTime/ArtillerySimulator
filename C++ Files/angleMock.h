@@ -16,9 +16,6 @@ class TestProjectile;                        // why is projectile here?
 class AngleMock : public Angle
 {
 public:
-   // Make the test class a friend to grant access for verifying the tests
-   friend class TestAngle;
-   
    // Constructors
    AngleMock() {}
    AngleMock(double initDegrees) {angle = initDegrees;}

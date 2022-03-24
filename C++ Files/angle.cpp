@@ -5,41 +5,41 @@
  * Author:
  *    Emilio Regino
  * Summary:
- *    
+ *    A single angle stored in degrees
  ************************************************************************/
-#include "angle.h"                // for the angle class definition
-#define _USE_MATH_DEFINES
-#include <cmath>
 
-Angle ang; // why is this not reconized??
+#include "angle.h"     // for the angle class definition
 
 /*************************************************
- * SET ANGLE
- * A method to set a new angle
+ * SET DEGREES
+ * A method to set a new angle in degrees
  **************************************************/
-void Angle :: setAngle(float newAngle)
+void Angle :: setDegrees(double newAngleDegrees)
 {
-   if (verifyNewAngle)
-      angle = newAngle;
+   // Make sure the angle is valid
+   if (verifyNewAngle(newAngleDegrees))
+      angle = newAngleDegrees;
    else
-      convertAngle
+      angle = convertToValid(newAngleDegrees);
 }
 
 /*************************************************
- * VERIFY ANGLE OR MAYBE CONVERT????                                                                        <- THIS COMMENT NEED IMPROVEMENT
- * Verify that when 0 degrees is up the a new
- * angle given is less than 90 degrees (pi/2)
- * and greater than -90 degrees (-pi/2)
+ * CONVERT TO VALID
+ * A method to convert an invalid angle to a
+ * valid angle.
  **************************************************/
-bool Angle :: verifyNewAngle(float newAngle)
+double Angle :: convertToValid(double newAngle)
 {
    // While new angle is greater than 90 degrees (pi / 2)
-   while (newAngle >= M_PI / 2)
+   while (newAngle > 90.0)
       // subtract 360 degrees (2pi) to make it valid
-      newAngle = newAngle - 2 * M_PI;
+      newAngle = newAngle - 360.0;
 
    // While new angle is less than than -90 degrees (-pi / 2)
-   while (newAngle <= -M_PI / 2)
+   while (newAngle < -90.0)
       // add 360 degrees (2pi) to make it valid
-      newAngle = newAngle + 2 * M_PI;
-}
+      newAngle = newAngle + 360.0;
+   
+   // return in degrees
+   return newAngle;
+};

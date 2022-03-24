@@ -10,8 +10,7 @@
 class Vector2DMock : public Vector2D
 {
 public:
-   // Make the test class a friend for verification of privates
-   friend class TestVector;
+   
    
    Vector2DMock()
    {
