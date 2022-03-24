@@ -4,10 +4,14 @@
  *    of a vector in 2-dimensional space, as well as including some simple
  *    calculations about the vector.
  * Author:
- *
+ *    Emilio Regino & Preston Millward
  * Summary:
- *
+ *    A 2D Vector expressed as horizontal and vertical components.
  ************************************************************************/
+//
+// IDEAS FOR IMPROVEMENT
+//
+//WHAT IF WE ADDED AN ADD METHOD THAT EVERYTHING GOES THROUGH TO ADD TO HOR AND VERT
 
 #pragma once
 
@@ -23,50 +27,22 @@ public:
    
    // Constructors
    Vector2D() : horizontalComponent(0.0), verticalComponent(0.0) {};
-   Vector2D(double hor, double vert) : horizontalComponent(hor), verticalComponent(vert)
-   {
-      // set mag and angle
-      setMagnitude(verticalComponent / cos(angle.getRadians()));
-      setAngle(atan2(horizontalComponent, verticalComponent));
-      
-   };
-   Vector2D(double magnitudeValue, Angle angleObject) : magnitude(magnitudeValue), angle(angleObject)
-   {
-      setHorizontal(magnitude * sin(angle.getRadians()));
-      setVertical(magnitude * cos(angle.getRadians()));
-   };
-   
-//   virtual Angle getAngle() { return Angle(); }     // Why do we need the get angle method?
+   Vector2D(Vector2D const &vect);                                                
+   Vector2D(double hor, double vert) : horizontalComponent(hor), verticalComponent(vert) {};
+   Vector2D(Angle angle, double magnitude);
    
    // Getters
    double getHorComponent() const { return horizontalComponent; };
    double getVertComponent() const { return verticalComponent; };
+   virtual Angle getAngle() const;
+   double getMagnitude() const;
    
    // Setters
    void setHorizontal(double horizontal) { horizontalComponent = horizontal; };
    void setVertical(double vertical) { verticalComponent = vertical; };
+   void addVector(Vector2D vector);
    
 protected:
-   double horizontalComponent;
-   double verticalComponent;
-   double magnitude;
-   Angle angle;
-   
-   // A method to get the magnitude (speed) of the vector
-   double getMagnitude() const { return magnitude; };      
-   Angle getAngle() const { return angle; }
-   
-   // A method to set the magnitude
-   void setMagnitude(double newMagnitude)             // Implement verification
-   {
-      // do some verification then set
-      magnitude = newMagnitude;
-   }
-   
-   // A method to set the Angle
-   void setAngle(Angle newAngle)                   // Implement verification & possibly angle copy constructor
-   {
-      // do some verification then set
-      angle = newAngle;
-   }
+   double horizontalComponent;        // The horizontal component
+   double verticalComponent;          // The vertical component
 };

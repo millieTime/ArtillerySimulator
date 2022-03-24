@@ -8,6 +8,8 @@
  ************************************************************************/
 
 #include "vector2D.h"
+#include <iostream>
+using namespace std;
 
 class TestVector
 {
@@ -15,14 +17,17 @@ public:
    // A method to run the tests
    void run()
    {
+      cout << "Vector: ";
       test_getHorComponent();
       test_getVertComponent();
-      test_getMagnitude();                      // tests need to be implemented
-      test_getAngle();                          // tests need to be implemented
+      test_getMagnitudeZero();
+      test_getMagnitude();
+      test_getAngleZero();
+      test_getAngle();
       test_setHorizontalComponent();
       test_setVerticalComponent();
-      test_setMagnitude();                        // tests needs to be implemented
-      test_setAngle();                            // test needs to be implemented
+      test_addVector();
+      cout << "Passed" << endl;
    }
    
 private:
@@ -34,58 +39,86 @@ private:
    void test_getHorComponent()
    {
       // Setup
-      Vector2D vector (10.0, 0.0);                          // set directly, or use default
-      double vert = vector.getVertComponent();
+      Vector2D vector;
+      vector.horizontalComponent = 10.0;
       
       // Exercise
       double value = vector.getHorComponent();
       
       // Verify
       assert(value == 10.0);
-      assert(vert == 0.0);                                  // const already verifies these
    }  // Teardown
    
    // Test the get vertical component method
    void test_getVertComponent()
    {
       // Setup
-      Vector2D vector (0.0, 10.0);
-      double hor = vector.getHorComponent();
+      Vector2D vector;
+      vector.verticalComponent = 10.0;
       
       // Exercise
       double value = vector.getVertComponent();
       
       // Verify
-      assert(hor == 0.0);
       assert(value == 10.0);
    }  // Teardown
    
-   // Test the get magnitude component method
-   // Test empty which is just 0 then test with components
-   void test_getMagnitude()
+   // Test the get magnitude component method with 0 values
+   void test_getMagnitudeZero()
    {
       // Setup
       Vector2D vector;
-      
+      vector.horizontalComponent = 0.0;
+      vector.verticalComponent = 0.0;
+
       // Exercise
       double value = vector.getMagnitude();
-      
+
       // Verify
       assert(value == 0.0);
    }  // Teardown
    
-   // Test the get angle component method
-   // make sure it's 0 if the vector is empty then actually test with components
+   // Test the get magnitude component method
+   void test_getMagnitude()
+   {
+      // Setup
+      Vector2D vector;
+      vector.horizontalComponent = 5.0;
+      vector.verticalComponent = 5.0;
+
+      // Exercise
+      double value = vector.getMagnitude();
+
+      // Verify
+      assert(value == 7.0710678118654755);
+   }  // Teardown
+   
+   // Test the get angle method with no values
+   void test_getAngleZero()
+   {
+      // Setup
+      Vector2D vector;
+
+      // Exercise
+      Angle value = vector.getAngle();
+
+      // Verify
+      assert(value.getDegrees() == 0.0);
+   }  // Teardown
+   
+   // Test the get angle method with values
    void test_getAngle()
    {
       // Setup
       Vector2D vector;
-      
+      vector.horizontalComponent = 5.0;
+      vector.verticalComponent = 5.0;
+
       // Exercise
       Angle value = vector.getAngle();
-      
+
       // Verify
-      assert(value.getDegrees() == 0.0);
+      assert(value.getDegrees() == 45.0);
    }  // Teardown
    
    // Test the set horizontal component method
@@ -93,9 +126,11 @@ private:
    {
       // Setup
       Vector2D vector;
+      vector.setVertical(0.0);
       
       // Exercise
       vector.setHorizontal(10.0);
+      
       
       // Verify
       assert(vector.horizontalComponent == 10.0);
@@ -107,39 +142,33 @@ private:
    {
       // Setup
       Vector2D vector;
+      vector.setHorizontal(0.0);
       
       // Exercise
       vector.setVertical(10.0);
+      
       
       // Verify
       assert(vector.horizontalComponent == 0.0);
       assert(vector.verticalComponent == 10.0);
    }  // Teardowns
    
-   // Test the set magnitude method
-   void test_setMagnitude()
+   // Test the add vector method
+   void test_addVector()
    {
       // Setup
       Vector2D vector;
+      vector.setHorizontal(0.0);
+      vector.setVertical(0.0);
+      Vector2D newVector;
+      newVector.setHorizontal(10.0);
+      newVector.setVertical(10.0);
       
       // Exercise
-      vector.setMagnitude(10.0);
+      vector.addVector(newVector);
       
       // Verify
-      assert(vector.magnitude == 10.0);
-   }  // Teardown
-   
-   // Test the set angle method
-   void test_setAngle()
-   {
-      // Setup
-      Vector2D vector;
-      Angle newAngle(90.0);
-      
-      // Exercise
-      vector.setAngle(newAngle);
-      
-      // Verify
-      assert(vector.angle.getDegrees() == 90.0);
-   }  // Teardown
+      assert(vector.horizontalComponent == 10.0);
+      assert(vector.verticalComponent == 10.0);
+   }  // Teardowns
 };

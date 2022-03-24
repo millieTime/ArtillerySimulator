@@ -22,7 +22,7 @@ public:
    // A method to run all the unit tests
    void run()
    {
-      cout << "Testing Angle: ";
+      cout << "Angle: ";
       test_setDegrees();
       test_setRadians();
       test_addDegrees();
