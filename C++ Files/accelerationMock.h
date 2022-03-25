@@ -51,8 +51,8 @@ public:
       }
       else if (magnitude == -16.270226284779565952890792291221 && angle.getDegrees() == 32.54)
       {
-         horizontalComponent = -13.716;
-         verticalComponent = -8.752;
+         horizontalComponent = -13.7160632688079074612481;
+         verticalComponent = -8.75156396102950015406609;
       }
       else
          assert(false);

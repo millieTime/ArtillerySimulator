@@ -5,7 +5,8 @@
  * Author:
  *    Emilio Regino
  * Summary:
- *    A single angle stored in degrees
+ *    Keeps track of an angle, and provides an easy interface to convert to
+ *    and from degrees and radians
  ************************************************************************/
 
 #include "angle.h"     // for the angle class definition

@@ -37,7 +37,6 @@ public:
    // Updaters
    void addDegrees(double amount) { setDegrees(angle + amount); };
    void addRadians(double amount) { addDegrees(degreesFromRadians(amount)); };
-
 protected:
    double angle;   // The angle in degrees
    

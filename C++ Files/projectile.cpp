@@ -28,7 +28,7 @@ Projectile::Projectile(Position point)
 * Tells the projectile it has been fired, and sets its velocity
 * to the given velocity
 *************************************************************/
-void Projectile::fire(VelocityMock initialVelocity)
+void Projectile::fire(Velocity initialVelocity)
 {
    if (status == LOADED)
    {
@@ -48,7 +48,7 @@ void Projectile::land(bool onTarget)
 {
    if (status == FLYING)
    {
-      velocity = VelocityMock(0, 0);
+      velocity = Velocity(0, 0);
       shadows.clear();
       shadows.push_back(position);
       status = (onTarget) ? ON_TARGET : OFF_TARGET;
@@ -95,15 +95,15 @@ void Projectile::move(double time)
 
       // Compute the total acceleration acting on the projectile.
       double dragForce = 0.5 * dragCoeff * density * speed * speed * getArea();
-      AccelerationMock dragAcceleration = AccelerationMock(-dragForce / MASS, velocity.getAngle());
-      AccelerationMock gravityAcceleration = AccelerationMock(0, -gravity);
+      Acceleration dragAcceleration = Acceleration(-dragForce / MASS, velocity.getAngle());
+      Acceleration gravityAcceleration = Acceleration(0, -gravity);
       dragAcceleration.addAcceleration(gravityAcceleration);
 
       // Update the position based on velocity, acceleration, and time.
-      position.addAccelerationVelocity(dragAcceleration, velocity, time);
+      position.applyAccelerationVelocity(dragAcceleration, velocity, time);
 
       // Update the velocity based on acceleration and time.
-      velocity.addAcceleration(dragAcceleration, time);
+      velocity.applyAcceleration(dragAcceleration, time);
 
       // Now that the projectile is in a new position, update the shadows and age.
       shiftShadows();
