@@ -32,7 +32,7 @@ Ground::Ground(const Position & posUpperRight) :
  * RESET
  * Create a new ground
  ************************************************************************/
- void Ground :: reset(Position & posHowitzer)
+ void Ground::reset(Position & posHowitzer)
  {
    // remember the integer width for later. It will come in handy
    int width = (int)posUpperRight.getPixelsX();
@@ -62,7 +62,7 @@ Ground::Ground(const Position & posUpperRight) :
          ground[i] = ground[i - 1];
       }
       else
-      { 
+      {
          // what percentage of the elevation were we at?
          double percent = (ground[i - 1] - posMinimum.getPixelsY()) /
                           (posMaximum.getPixelsY() - posMinimum.getPixelsY());

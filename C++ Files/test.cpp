@@ -11,6 +11,9 @@
 #include "testPosition.h"
 #include "testProjectile.h"
 #include "testGround.h"
+#include "testAngle.h"
+#include "testVector2D.h"
+#include "testGravityLookUp.h"
 #include "testAcceleration.h"
 #include <iostream>
 using namespace std;
@@ -22,9 +25,12 @@ using namespace std;
 void testRunner()
 {
    cout << "Testing. . ." << endl;
-   TestPosition().run();
-   TestProjectile().run();
-   //TestGround().run();
-   TestAcceleration().run();
+//   TestPosition().run();
+//   TestAcceleration().run();
+//   TestProjectile().run();
+//   TestGround().run();
+//   TestAngle().run();
+   TestVector().run();
+//   TestGravityLookUp().run();
    cout << "All tests passed" << endl;
 }

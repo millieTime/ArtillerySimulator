@@ -20,7 +20,7 @@ class Ground
 {
 public:
    // Ground test has access to privates of Ground
-   friend class TestGround;
+//   friend class TestGround;
    
    // the constructor generates the ground
    Ground(const Position &posUpperRight);

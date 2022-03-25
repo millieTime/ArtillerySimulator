@@ -17,7 +17,7 @@ class MachLookUp : public LookUp
 {
 public:
    MachLookUp() {};
-   double getMach(double altitude) const {};
+   double getMach(double altitude) const {assert(false); return 0.0;};
 private:
 
 };

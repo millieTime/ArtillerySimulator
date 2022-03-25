@@ -18,6 +18,8 @@
 #include "machLookUpMock.h"
 #include "uiDraw.h"  // for ogstream
 #include <vector>    // for vectors
+#define _USE_MATH_DEFINES // for M_PI to work on xcode (comment out on windows)
+#include <cmath>           // for M_PI to work on xcode (comment out on windows)
 class TestProjectile;
 
  /*********************************************

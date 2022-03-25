@@ -113,7 +113,7 @@ void Projectile::move(double time)
 
 
 // PI, for the calculation of area
-const long double M_PI = 3.14159265358979323846;
+//const long double M_PI = 3.14159265358979323846; // comment out if on xcode, un comment if on windows
 /***********************************************************
 * PROJECTILE : GET AREA
 * Returns the cross-sectional area of the shell, in meters,

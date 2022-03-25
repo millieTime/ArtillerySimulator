@@ -4,24 +4,44 @@
  *    of a vector in 2-dimensional space, as well as including some simple
  *    calculations about the vector.
  * Author:
- *    Preston Millward
+ *    Emilio Regino & Preston Millward
  * Summary:
- *    Stub of the Vector2D class, just enough so the program compiles.
+ *    A 2D Vector expressed as horizontal and vertical components.
  ************************************************************************/
+//
+// IDEAS FOR IMPROVEMENT
+//
+//WHAT IF WE ADDED AN ADD METHOD THAT EVERYTHING GOES THROUGH TO ADD TO HOR AND VERT
 
 #pragma once
 
-#include "angleMock.h"
+#include <cmath>     // For sin() & cos()
+#include "angle.h"   // For the angle class
 
 class Vector2D
 {
 public:
+   // Make the test class a friend for verification of privates
+   friend class TestVector;
+   
+   // Constructors
    Vector2D() : horizontalComponent(0.0), verticalComponent(0.0) {};
-   Vector2D(double x, double y) : horizontalComponent(x), verticalComponent(y) {};
-   Vector2D(double magnitude, Angle angle) {};
-   virtual Angle getAngle() { return AngleMock(); }
+   Vector2D(Vector2D const &vect);                                                
+   Vector2D(double hor, double vert) : horizontalComponent(hor), verticalComponent(vert) {};
+   Vector2D(Angle angle, double magnitude);
+   
+   // Getters
+   double getHorComponent() const { return horizontalComponent; };
+   double getVertComponent() const { return verticalComponent; };
+   virtual Angle getAngle() const;
+   double getMagnitude() const;
+   
+   // Setters
+   void setHorizontal(double horizontal) { horizontalComponent = horizontal; };
+   void setVertical(double vertical) { verticalComponent = vertical; };
+   void addVector(Vector2D vector);
+  
 protected:
-   double horizontalComponent;
-   double verticalComponent;
-   double getMagnitude() const { return 0.0; };
+   double horizontalComponent;        // The horizontal component
+   double verticalComponent;          // The vertical component
 };
