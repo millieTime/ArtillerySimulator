@@ -13,6 +13,7 @@
 #include <iostream>
 #include <cassert>
 #include "projectile.h"
+#include "velocityMock.h"
 
 using namespace std;
 
@@ -441,15 +442,15 @@ public:
       // exercise
       shell.move(0.5);
       // verify
-      assert(decimalCloseEnough(shell.position.getMetersX(), 3247.4255));
-      assert(decimalCloseEnough(shell.position.getMetersY(), 5156.6321));
-      assert(decimalCloseEnough(shell.velocity.horizontalComponent, 491.422));
-      assert(decimalCloseEnough(shell.velocity.verticalComponent, 308.6285));
+      assert(decimalCloseEnough(shell.position.getMetersX(), 3248.0461));
+      assert(decimalCloseEnough(shell.position.getMetersY(), 5156.0116));
+      assert(decimalCloseEnough(shell.velocity.horizontalComponent, 493.9042));
+      assert(decimalCloseEnough(shell.velocity.verticalComponent, 306.1465));
       assert(shell.age == 5.5);
       assert(shell.status == Projectile::FLYING);
       assert(shell.shadows.size() == 2);
-      assert(decimalCloseEnough(shell.shadows.at(0).getMetersX(), 3247.4255));
-      assert(decimalCloseEnough(shell.shadows.at(0).getMetersY(), 5156.6321));
+      assert(decimalCloseEnough(shell.shadows.at(0).getMetersX(), 3248.0461));
+      assert(decimalCloseEnough(shell.shadows.at(0).getMetersY(), 5156.0116));
       assert(shell.shadows.at(1).getMetersX() == 0);
       assert(shell.shadows.at(1).getMetersY() == 0);
    }  // teardown

@@ -9,8 +9,8 @@
  ************************************************************************/
 #pragma once
 #include "position.h"
-#include "velocityMock.h"
-#include "accelerationMock.h"
+#include "velocity.h"
+#include "acceleration.h"
 #include "angle.h"
 #include "airDensityLookUpMock.h"
 #include "gravityLookUpMock.h"
@@ -32,12 +32,12 @@ public:
    Projectile();
    Projectile(Position point);
    void move(double time);
-   void fire(VelocityMock initialVelocity);
+   void fire(Velocity initialVelocity);
    void land(bool onTarget);
    Position getPosition() const { return position; };
    Position getLastPosition() const { return shadows.at(1); };
    double getSpeed() const { return velocity.getSpeed(); };
-   VelocityMock getVelocity() const { return velocity; };
+   Velocity getVelocity() const { return velocity; };
    Angle getAngle() const { return Angle(); };
    float getAge() const { return age; };
    bool isLoaded() const { return status == LOADED; };
@@ -57,7 +57,7 @@ private:
    const MachLookUpMock machTable;
    const DragLookUpMock dragTable;
    float age = 0;
-   VelocityMock velocity;
+   Velocity velocity;
    Position position;
    const enum ProjectileStatus{ LOADED, FLYING, ON_TARGET, OFF_TARGET };
    ProjectileStatus status;

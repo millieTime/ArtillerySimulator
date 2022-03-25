@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "angle.h"
+#include "angleMock.h"
 
 class Vector2D
 {
@@ -19,7 +19,7 @@ public:
    Vector2D() : horizontalComponent(0.0), verticalComponent(0.0) {};
    Vector2D(double x, double y) : horizontalComponent(x), verticalComponent(y) {};
    Vector2D(double magnitude, Angle angle) {};
-   virtual Angle getAngle() { return Angle(); }
+   virtual Angle getAngle() { return AngleMock(); }
 protected:
    double horizontalComponent;
    double verticalComponent;

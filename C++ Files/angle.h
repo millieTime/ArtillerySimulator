@@ -18,6 +18,7 @@ class Angle
 public:
    Angle() {};
    virtual double getDegrees(){ return angle; }
+   virtual double getRadians() { return angle; }
 protected:
    double angle;
 };
