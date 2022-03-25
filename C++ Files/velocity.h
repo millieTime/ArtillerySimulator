@@ -11,21 +11,22 @@
 #pragma once
 
 #include "vector2DMock.h"
+#include "acceleration.h"
 
 class TestVelocity;
 class TestProjectile;
 
-class Velocity : public Vector2DMock
+class Velocity : public Vector2D
 {
 public:
    friend class TestVelocity;
    friend class TestProjectile;
 
    Velocity() {};
-   Velocity(double x, double y) : Vector2DMock(x, y) { };
-   Velocity(double mag, Angle angle) : Vector2DMock(mag, angle) {};
+   Velocity(double x, double y) : Vector2D(x, y) { };
+   Velocity(Angle angle, double mag) : Vector2D(angle, mag) {};
 
-   virtual void applyAcceleration(Acceleration accel, double time) {};
+   virtual void applyAcceleration(Acceleration accel, double time);
 
    virtual double getDX() const { return horizontalComponent; };
    virtual double getDY() const { return verticalComponent; };

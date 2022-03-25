@@ -14,17 +14,17 @@
 
 class TestAcceleration;
 
-class Acceleration : public Vector2DMock
+class Acceleration : public Vector2D
 {
 public:
    friend class TestAcceleration;
 
    // Default constructor
-   Acceleration() : Vector2DMock() { };
+   Acceleration() : Vector2D() { };
    // Constructs an Acceleration from a horizontal and vertical component
-   Acceleration(double ddx, double ddy) : Vector2DMock(ddx, ddy) { };
+   Acceleration(double ddx, double ddy) : Vector2D(ddx, ddy) { };
    // Constructs an Acceleration from an angle and magnitude
-   Acceleration(double magnitude, Angle angle) : Vector2DMock(magnitude, angle) { }
+   Acceleration(Angle angle, double magnitude) : Vector2D(angle, magnitude) { }
 
    // Getters
    virtual double getDDX() const { return horizontalComponent; };

@@ -25,7 +25,7 @@ public:
       verticalComponent = initDDY;
    };
 
-   AccelerationMock(double magnitude, Angle angle)
+   AccelerationMock(Angle angle, double magnitude)
    {
       // if magnitude is small, just have a zero acceleration.
       if (-0.0001 < magnitude && magnitude < 0.0001)

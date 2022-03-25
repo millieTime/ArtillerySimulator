@@ -48,10 +48,10 @@ public:
    {
       // setup
       // exercise
-      Velocity vel = Velocity(2.0, AngleMock(45));
+      Velocity vel = Velocity(AngleMock(45), 2.0);
       // verify
-      assert(decimalCloseEnough(vel.horizontalComponent, 0.7071067811865475244));
-      assert(decimalCloseEnough(vel.verticalComponent, 0.7071067811865475244));
+      assert(decimalCloseEnough(vel.horizontalComponent, 1.4142135623730950));
+      assert(decimalCloseEnough(vel.verticalComponent, 1.4142135623730950));
    }  // teardown
 
    void testGetSpeed()

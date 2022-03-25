@@ -15,6 +15,7 @@
 #include "testVector2D.h"
 #include "testGravityLookUp.h"
 #include "testAcceleration.h"
+#include "testVelocity.h"
 #include <iostream>
 using namespace std;
 
@@ -25,12 +26,13 @@ using namespace std;
 void testRunner()
 {
    cout << "Testing. . ." << endl;
-//   TestPosition().run();
-//   TestAcceleration().run();
-//   TestProjectile().run();
+   TestPosition().run();
+   TestAcceleration().run();
+   TestProjectile().run();
 //   TestGround().run();
-//   TestAngle().run();
+   TestAngle().run();
    TestVector().run();
+   TestVelocity().run();
 //   TestGravityLookUp().run();
    cout << "All tests passed" << endl;
 }

@@ -442,15 +442,15 @@ public:
       // exercise
       shell.move(0.5);
       // verify
-      assert(decimalCloseEnough(shell.position.getMetersX(), 3248.0461));
-      assert(decimalCloseEnough(shell.position.getMetersY(), 5156.0116));
-      assert(decimalCloseEnough(shell.velocity.horizontalComponent, 493.9042));
-      assert(decimalCloseEnough(shell.velocity.verticalComponent, 306.1465));
+      assert(decimalCloseEnough(shell.position.getMetersX(), 3247.4254));
+      assert(decimalCloseEnough(shell.position.getMetersY(), 5156.6322));
+      assert(decimalCloseEnough(shell.velocity.horizontalComponent, 491.4218));
+      assert(decimalCloseEnough(shell.velocity.verticalComponent, 308.6290));
       assert(shell.age == 5.5);
       assert(shell.status == Projectile::FLYING);
       assert(shell.shadows.size() == 2);
-      assert(decimalCloseEnough(shell.shadows.at(0).getMetersX(), 3248.0461));
-      assert(decimalCloseEnough(shell.shadows.at(0).getMetersY(), 5156.0116));
+      assert(decimalCloseEnough(shell.shadows.at(0).getMetersX(), 3247.4254));
+      assert(decimalCloseEnough(shell.shadows.at(0).getMetersY(), 5156.6322));
       assert(shell.shadows.at(1).getMetersX() == 0);
       assert(shell.shadows.at(1).getMetersY() == 0);
    }  // teardown

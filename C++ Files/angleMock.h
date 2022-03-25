@@ -24,7 +24,6 @@ public:
    virtual double getDegrees() { return angle; }
    virtual double getRadians()
    {
-      long double const PI = 3.14159265358979323846;
       if (angle == 45)
          return PI / 4.0;
 
