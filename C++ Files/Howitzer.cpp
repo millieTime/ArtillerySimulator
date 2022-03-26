@@ -48,7 +48,7 @@ void Howitzer::lower()
    if (angle.getDegrees() >= 0)
    {
       // Only increase by the full amount if the result is below 90.
-      if (angle.getRadians() + SMALL_ANGLE_CHANGE <= AngleMock(90).getRadians())
+      if (angle.getRadians() + SMALL_ANGLE_CHANGE <= Angle(90).getRadians())
          angle.addRadians(SMALL_ANGLE_CHANGE);
       else
          angle.setDegrees(90.0);
@@ -57,7 +57,7 @@ void Howitzer::lower()
    else
    {
       // Only decrease by the full amount if the result is above -90.
-      if (angle.getRadians() - SMALL_ANGLE_CHANGE >= AngleMock(-90).getRadians())
+      if (angle.getRadians() - SMALL_ANGLE_CHANGE >= Angle(-90).getRadians())
          angle.addRadians(-SMALL_ANGLE_CHANGE);
       else
          angle.setDegrees(-90.0);
@@ -71,7 +71,7 @@ void Howitzer::lower()
 void Howitzer::clockwise()
 {
    // Only increase by the full amount if the result not above 90.
-   if (angle.getRadians() + LARGE_ANGLE_CHANGE <= AngleMock(90).getRadians())
+   if (angle.getRadians() + LARGE_ANGLE_CHANGE <= Angle(90).getRadians())
       angle.addRadians(LARGE_ANGLE_CHANGE);
    else
       angle.setDegrees(90.0);
@@ -84,7 +84,7 @@ void Howitzer::clockwise()
 void Howitzer::counterClockwise()
 {
    // Only increase by the full amount if the result is not below -90.
-   if (angle.getRadians() - LARGE_ANGLE_CHANGE >= AngleMock(-90).getRadians())
+   if (angle.getRadians() - LARGE_ANGLE_CHANGE >= Angle(-90).getRadians())
       angle.addRadians(-LARGE_ANGLE_CHANGE);
    else
       angle.setDegrees(-90.0);

@@ -39,7 +39,7 @@ public:
       if (pixelsX >= 0.0 && pixelsX < (int)posUpperRight.getPixelsX())
          pixelsY = ground[(int)pos.getPixelsX()];
       Position posImpact;
-      posImpact.setPixelsY(pixelsY);
+      posImpact.setPixelsY(pos.getPixelsY() - pixelsY);
       return posImpact.getMetersY();
    }
 
@@ -49,7 +49,8 @@ public:
       return posTarget;
    }
    
-   bool hitGround(Position pos) { return true; };
+   bool hitGround(Position pos) { return getElevationMeters(pos) <= 0; };
+   bool hitTarget(Position pos) { return (hitGround(pos) && (posTarget.getPixelsX() - 5 <= pos.getPixelsX()) && (pos.getPixelsX() <= posTarget.getPixelsX() + 5)); }
 
 private:
    double * ground;               // elevation of the ground, in pixels 

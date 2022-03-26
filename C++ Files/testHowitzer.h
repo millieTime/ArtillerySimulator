@@ -69,7 +69,7 @@ public:
       // verify
       assert(how.position.getMetersX() == 125);
       assert(how.position.getMetersY() == 256);
-      assert(how.angle.getDegrees() == 0.0);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.0));
    }  // teardown
 
    void testSetPosition()
@@ -126,7 +126,7 @@ public:
       // exercise
       how.raise();
       // verify
-      assert(how.angle.getDegrees() == 0.0);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.0));
    }  // teardown
 
    void testRaiseToZeroNeg()
@@ -137,7 +137,7 @@ public:
       // exercise
       how.raise();
       // verify
-      assert(how.angle.getDegrees() == 0.0);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.0));
    }  // teardown
 
    void testRaiseToZeroPos()
@@ -148,7 +148,7 @@ public:
       // exercise
       how.raise();
       // verify
-      assert(how.angle.getDegrees() == 0.0);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.0));
    }  // teardown
 
    void testRaisePastZeroPos()
@@ -159,7 +159,7 @@ public:
       // exercise
       how.raise();
       // verify
-      assert(how.angle.getDegrees() == 0.0);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.0));
    }  // teardown
 
    void testRaisePastZeroNeg()
@@ -170,7 +170,7 @@ public:
       // exercise
       how.raise();
       // verify
-      assert(how.angle.getDegrees() == 0.0);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.0));
    }  // teardown
 
    void testLowerNormal()
@@ -214,7 +214,7 @@ public:
       // exercise
       how.lower();
       // verify
-      assert(how.angle.getDegrees() == 0.17188733854);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 0.17188733854));
    }  // teardown
 
    void testLowerToMin()
@@ -225,7 +225,7 @@ public:
       // exercise
       how.lower();
       // verify
-      assert(how.angle.getDegrees() == -90);
+      assert(decimalCloseEnough(how.angle.getDegrees(), -90));
    }  // teardown
 
    void testLowerToMax()
@@ -236,7 +236,7 @@ public:
       // exercise
       how.lower();
       // verify
-      assert(how.angle.getDegrees() == 90);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 90));
    }  // teardown
 
    void testLowerPastMin()
@@ -247,7 +247,7 @@ public:
       // exercise
       how.lower();
       // verify
-      assert(how.angle.getDegrees() == -90);
+      assert(decimalCloseEnough(how.angle.getDegrees(), -90));
    }  // teardown
 
    void testLowerPastMax()
@@ -258,7 +258,7 @@ public:
       // exercise
       how.lower();
       // verify
-      assert(how.angle.getDegrees() == 90);
+      assert(decimalCloseEnough(how.angle.getDegrees(),  90));
    }  // teardown
 
    void testClockwiseNormal()
@@ -302,7 +302,7 @@ public:
       // exercise
       how.clockwise();
       // verify
-      assert(how.angle.getDegrees() == 90);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 90));
    }  // teardown
 
    void testClockwisePastMax()
@@ -313,7 +313,7 @@ public:
       // exercise
       how.clockwise();
       // verify
-      assert(how.angle.getDegrees() == 90);
+      assert(decimalCloseEnough(how.angle.getDegrees(), 90));
    }  // teardown
 
    void testCounterClockwiseNormal()

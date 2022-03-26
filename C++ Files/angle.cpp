@@ -15,13 +15,17 @@
  * SET DEGREES
  * A method to set a new angle in degrees
  **************************************************/
-void Angle :: setDegrees(double newAngleDegrees)
+void Angle::setDegrees(double newAngle)
 {
-   // Make sure the angle is valid
-   if (verifyNewAngle(newAngleDegrees))
-      angle = newAngleDegrees;
-   else
-      angle = convertToValid(newAngleDegrees);
+   // verify the new angle is valid
+   // angle must be between -pi and +pi radians
+   while (newAngle >= 180)
+      newAngle = newAngle - 180;
+   while (newAngle <= -180)
+      newAngle = newAngle + 180;
+
+   // Now assign the new angle
+   angle = newAngle;
 }
 
 /*************************************************

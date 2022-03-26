@@ -12,10 +12,10 @@
 #include "velocity.h"
 #include "acceleration.h"
 #include "angle.h"
-#include "airDensityLookUpMock.h"
-#include "gravityLookUpMock.h"
-#include "dragLookUpMock.h"
-#include "machLookUpMock.h"
+#include "airDensityLookUp.h"
+#include "gravityLookUp.h"
+#include "dragLookUp.h"
+#include "machLookUp.h"
 #include "uiDraw.h"  // for ogstream
 #include <vector>    // for vectors
 #define _USE_MATH_DEFINES // for M_PI to work on xcode (comment out on windows)
@@ -34,6 +34,7 @@ public:
    friend class TestHowitzer;
    Projectile();
    Projectile(Position point);
+   Projectile operator=(Projectile otherP);
    virtual void move(double time);
    virtual void fire(Velocity initialVelocity);
    virtual void land(bool onTarget);
@@ -47,7 +48,7 @@ public:
    virtual bool isFlying() const { return status == FLYING; };
    virtual bool isLanded() const { return (status == ON_TARGET || status == OFF_TARGET); };
    virtual bool isOnTarget() const { return status == ON_TARGET; };
-   virtual void draw(ogstream& gout) const {};
+   virtual void draw(ogstream& gout) const;
 
 protected:
    void shiftShadows();
@@ -55,10 +56,10 @@ protected:
    const double MASS = 46.7;        // kilograms
    const double DIAMETER = 0.15489; // meters
    const char NUM_SHADOWS = 6;
-   const GravityLookUpMock gravityTable;
-   const AirDensityLookUpMock airDensityTable;
-   const MachLookUpMock machTable;
-   const DragLookUpMock dragTable;
+   const GravityLookUp gravityTable;
+   const AirDensityLookUp airDensityTable;
+   const MachLookUp machTable;
+   const DragLookUp dragTable;
    float age = 0;
    Velocity velocity;
    Position position;

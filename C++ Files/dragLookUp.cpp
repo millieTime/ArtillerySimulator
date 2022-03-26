@@ -29,7 +29,7 @@ double DragLookUp :: getDrag(double mach) const
       // Check for the matching key
       if (item.key == x1)
          y1 = table[i].value;
-      else if (item.key == x2)
+      if (item.key == x2)
          y2 = table[i].value;
    }
    
@@ -91,12 +91,5 @@ double DragLookUp :: interpolate(double x0,  double y0, double x1, double y1, do
 
 bool DragLookUp :: closeEnough(double computedValue, double hardcodeValue) const
 {
-   string stringC = to_string(computedValue);
-   string stringH = to_string(hardcodeValue);
-   for (int i = 0; i < 6; i++)
-   {
-      if (stringC[i] != stringH[i])
-         return false;
-   }
-   return true;
+   return abs(computedValue - hardcodeValue) < 0.0005;
 }

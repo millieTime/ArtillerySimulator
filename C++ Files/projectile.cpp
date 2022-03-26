@@ -23,6 +23,17 @@ Projectile::Projectile(Position point)
    shadows.push_back(point);
 }
 
+// Copy constructor
+Projectile Projectile::operator=(Projectile otherP)
+{
+   position = otherP.position;
+   velocity = otherP.velocity;
+   status = otherP.status;
+   shadows = otherP.shadows;
+   age = otherP.age;
+   return *this;
+}
+
 /************************************************************
 * PROJECTILE : FIRE
 * Tells the projectile it has been fired, and sets its velocity
@@ -83,6 +94,10 @@ void Projectile::move(double time)
    if (status == FLYING)
    {
       // Get the projectile's current speed and altitude.
+      if (getVelocity().getSpeed() < 90)
+      {
+         double a = 3;
+      }
       double altitude = position.getMetersY();
       double speed = velocity.getSpeed();
 
@@ -110,6 +125,16 @@ void Projectile::move(double time)
       age += time;
    }
 }
+
+/***********************************************************
+* PROJECTILE : DRAW
+* Draws the projectile and its shadows.
+************************************************************/
+void Projectile::draw(ogstream& gout) const
+{
+   for (int i = 0; i < shadows.size(); i++)
+      gout.drawProjectile(shadows.at(i), 0.5 * (double)i);
+};
 
 
 // PI, for the calculation of area
