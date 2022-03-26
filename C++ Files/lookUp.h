@@ -9,15 +9,18 @@
  ************************************************************************/
 #pragma once
 
-#include <tuple>
+//#include <tuple>
+#include <cassert>
 
 class LookUp
 {
 public:
-   LookUp() {};
+   LookUp() {
+      
+   };
 
 protected:
-   std::tuple<double, double> * table;
+//   std::tuple<double, double> * table;
    double get_value(double input) {assert(false); return 0.0;};
-   double interpolate(double x1, double x2, double y1, double y2, double toFind) {assert(false); return 0.0;};
+   double interpolate(double x1, double x2, double y1, double y2, double toFind);
 };

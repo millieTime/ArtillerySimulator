@@ -28,7 +28,7 @@ void testRunner()
 //   TestProjectile().run();
 //   TestGround().run();
 //   TestAngle().run();
-   TestVector().run();
-//   TestGravityLookUp().run();
+//   TestVector().run();
+   TestGravityLookUp().run();
    cout << "All tests passed" << endl;
 }
