@@ -32,12 +32,12 @@ void Angle :: setDegrees(double newAngleDegrees)
 double Angle :: convertToValid(double newAngle)
 {
    // While new angle is greater than 90 degrees (pi / 2)
-   while (newAngle > 90.0)
+   while (newAngle > 180.0)
       // subtract 360 degrees (2pi) to make it valid
       newAngle = newAngle - 360.0;
 
    // While new angle is less than than -90 degrees (-pi / 2)
-   while (newAngle < -90.0)
+   while (newAngle < -180.0)
       // add 360 degrees (2pi) to make it valid
       newAngle = newAngle + 360.0;
    

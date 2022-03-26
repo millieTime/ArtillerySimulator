@@ -34,6 +34,10 @@ public:
       test_verifyNewAngle_IsInvalid();
       test_convertToValid_max();
       test_convertToValid_min();
+      test_convertToValid_181();
+      test_convertToValid_181Neg();
+      test_convertToValid_195();
+      test_convertToValid_195Neg();
       test_degreesFromRadians();
       test_radiansFromDegrees();
       test_degreesFromXYZero();
@@ -158,20 +162,13 @@ private:
       Angle angle;
       
       // Exercise
-      bool value = angle.verifyNewAngle(91.0);
+      bool value = angle.verifyNewAngle(181.0);
       
       // Verify
       assert(value == false);
    }  // Teardown
    
-   /* Test that an angle above the max angle
-    * is converted to a valid angle.
-    * This angle should be passed in 360 degrees
-    * greater than the valid angle to test.
-    * Example: 90 + 360 = 450
-    * Pass in 450
-    * Verify that the new angle is then 90
-    */
+   //
    void test_convertToValid_max()
    {
       // Setup
@@ -184,14 +181,7 @@ private:
       assert(value == 90.0);
    }  // Teardown
    
-   /* Test that an angle below the min angle
-    * is converted to a valid angle.
-    * This angle should be passed in 360 degrees
-    * less than the valid angle to test.
-    * Example: -90 - 360 = -450
-    * Pass in -450
-    * Verify that the new angle is then -90
-    */
+   //
    void test_convertToValid_min()
    {
       // Setup
@@ -202,6 +192,55 @@ private:
       
       // Verify
       assert(value == -90.0);
+   }  // Teardown
+   
+   // Testing the boundry
+   void test_convertToValid_181()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      double value = angle.convertToValid(181);
+      
+      // Verify
+      assert(value == -179.0);
+   }  // Teardown
+   
+   void test_convertToValid_181Neg()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      double value = angle.convertToValid(-181);
+      
+      // Verify
+      assert(value == 179.0);
+   }  // Teardown
+   
+   void test_convertToValid_195()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      double value = angle.convertToValid(195);
+      
+      // Verify
+      assert(value == -165);
+   }  // Teardown
+   
+   void test_convertToValid_195Neg()
+   {
+      // Setup
+      Angle angle;
+      
+      // Exercise
+      double value = angle.convertToValid(-195);
+      
+      // Verify
+      assert(value == 165);
    }  // Teardown
    
    // Test the convert to degrees method
