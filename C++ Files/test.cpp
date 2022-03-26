@@ -14,6 +14,9 @@
 #include "testAngle.h"
 #include "testVector2D.h"
 #include "testGravityLookUp.h"
+#include "testAirDensityLookUp.h"
+#include "testDragLookUp.h"
+#include "testMachLookUp.h"
 #include "testAcceleration.h"
 #include <iostream>
 using namespace std;
@@ -29,8 +32,11 @@ void testRunner()
 //   TestAcceleration().run();
 //   TestProjectile().run();
 //   TestGround().run();
-//   TestAngle().run();
-//   TestVector().run();
+   TestAngle().run();
+   TestVector().run();
    TestGravityLookUp().run();
+   TestAirDensityLookUp().run();
+   TestDragLookUp().run();
+   TestMachLookUp().run();
    cout << "All tests passed" << endl;
 }

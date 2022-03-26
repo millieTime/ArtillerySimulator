@@ -65,7 +65,6 @@ private:
       double value = grav.getGravity(3050.0);
       
       // Verify
-//      assert(value == 9.79685);
       assert(grav.closeEnough(value, 9.79685));
    }  // Teardown
    

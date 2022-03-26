@@ -10,6 +10,7 @@
 #pragma once
 #include <cassert>
 #include "vector2D.h"
+#include "angleMock.h"
 
 class TestAcceleration;
 

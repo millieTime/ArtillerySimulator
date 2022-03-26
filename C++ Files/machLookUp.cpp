@@ -5,20 +5,20 @@
 using namespace std;
 
 // A method to get the gravity from a given altitude
-double MachLookUp :: getMach(double mach) const
+double MachLookUp :: getMach(double altitude) const
 {
    // Iterate through the table
    for (int i=0; i < 14; i++)
    {
       tableItem item = table[i];
       // Check for the matching key
-      if (item.key == mach)
+      if (item.key == altitude)
          return item.value;
    }
    
    // If not found then search the table for the value just before
    // and the value just after where it would be in the table
-   tableItem key1Key2 = searchTable(mach);
+   tableItem key1Key2 = searchTable(altitude);
    double x1 = key1Key2.key;
    double y1 = 0.0;
    double x2 = key1Key2.value;
@@ -34,7 +34,7 @@ double MachLookUp :: getMach(double mach) const
          y2 = table[i].value;
    }
    
-   double value = interpolate(x1, y1, x2, y2, mach);
+   double value = interpolate(x1, y1, x2, y2, altitude);
    
    return value;
 }

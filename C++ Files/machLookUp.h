@@ -16,6 +16,9 @@
 class MachLookUp : public LookUp
 {
 public:
+   // Make the test class a friend
+   friend class TestMachLookUp;
+   
    MachLookUp()
    {
       table[0] = tableItem(0.0,      340.0);
