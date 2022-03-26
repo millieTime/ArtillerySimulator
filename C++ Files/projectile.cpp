@@ -95,7 +95,7 @@ void Projectile::move(double time)
 
       // Compute the total acceleration acting on the projectile.
       double dragForce = 0.5 * dragCoeff * density * speed * speed * getArea();
-      Acceleration dragAcceleration = Acceleration(-dragForce / MASS, velocity.getAngle());
+      Acceleration dragAcceleration = Acceleration(velocity.getAngle() , -dragForce / MASS);
       Acceleration gravityAcceleration = Acceleration(0, -gravity);
       dragAcceleration.addAcceleration(gravityAcceleration);
 
@@ -121,6 +121,7 @@ void Projectile::move(double time)
 ************************************************************/
 double Projectile::getArea() const
 {
+   const long double PI = 3.14159265358979323846;
    double r = DIAMETER / 2.0;
-   return M_PI * r * r;
+   return PI * r * r;
 }

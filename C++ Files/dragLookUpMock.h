@@ -17,8 +17,8 @@ public:
       // dragMock returns 0.1629 if it gets anything less than 0.3
       if (mach < 0.3)
          return 0.1629;
-      // dragMock returns 0.3135 if the mach is 1.8470398837124999
-      else if (mach == 1.8470398837124999)
+      // dragMock returns 0.3135 if the mach is 1.8470398837142770
+      else if (mach == 1.8470398837142770)
          return 0.3135;
       else
          assert(false);

@@ -10,6 +10,7 @@
 #include "test.h"
 #include "testPosition.h"
 #include "testProjectile.h"
+#include "testHowitzer.h"
 #include "testGround.h"
 #include "testAngle.h"
 #include "testVector2D.h"
@@ -18,6 +19,7 @@
 #include "testDragLookUp.h"
 #include "testMachLookUp.h"
 #include "testAcceleration.h"
+#include "testVelocity.h"
 #include <iostream>
 using namespace std;
 
@@ -28,9 +30,9 @@ using namespace std;
 void testRunner()
 {
    cout << "Testing. . ." << endl;
-//   TestPosition().run();
-//   TestAcceleration().run();
-//   TestProjectile().run();
+   TestPosition().run();
+   TestAcceleration().run();
+   TestProjectile().run();
 //   TestGround().run();
    TestAngle().run();
    TestVector().run();
@@ -38,5 +40,7 @@ void testRunner()
    TestAirDensityLookUp().run();
    TestDragLookUp().run();
    TestMachLookUp().run();
+   TestVelocity().run();
+   TestHowitzer().run();
    cout << "All tests passed" << endl;
 }

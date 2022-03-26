@@ -20,12 +20,12 @@ public:
    friend class TestAcceleration;
    Vector2DMock() : horizontalComponent(0.0), verticalComponent(0.0) {};
    Vector2DMock(double x, double y) : horizontalComponent(x), verticalComponent(y) {};
-   Vector2DMock(double magnitude, Angle angle)
+   Vector2DMock(Angle angle, double magnitude)
    {
       if (magnitude == 2.0 && angle.getDegrees() == 45)
       {
-         horizontalComponent = 0.7071067811865475244;
-         verticalComponent = 0.7071067811865475244;
+         horizontalComponent = 1.4142135623730950;
+         verticalComponent = 1.4142135623730950;
       }
       else if (magnitude == -0.0010064378153436754 && angle.getDegrees() == 53.130000000000003)
       {

@@ -11,6 +11,8 @@
 #define _USE_MATH_DEFINES
 #include <cmath>
 
+
+long double const PI = 3.14159265358979323846;
 /***********************************************************
  * ANGLE
  * The angle class
@@ -39,10 +41,9 @@ public:
    void addRadians(double amount) { addDegrees(degreesFromRadians(amount)); };
 protected:
    double angle;   // The angle in degrees
-   
    // Converters
-   double degreesFromRadians(double radians) const { return radians * 180 / M_PI; };
-   double radiansFromDegrees(double degrees) const { return degrees * M_PI / 180; };
+   double degreesFromRadians(double radians) const { return radians * 180 / PI; };
+   double radiansFromDegrees(double degrees) const { return degrees * PI / 180; };
    double degreesFromXY(double x, double y) const { return degreesFromRadians(atan2(x, y)); }
    
    // Validators

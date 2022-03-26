@@ -66,7 +66,7 @@ private:
       Angle angle;
       
       // Exercise
-      angle.setRadians(M_PI);
+      angle.setRadians(PI);
       
       // Verify
       assert(angle.angle == 180.0);
@@ -94,7 +94,7 @@ private:
       angle.angle = 0.0;
       
       // Exercise
-      angle.addRadians(M_PI);
+      angle.addRadians(PI);
       
       // Verify
       assert(angle.angle == 180.0);
@@ -125,7 +125,7 @@ private:
       double value = angle.getRadians();
       
       // Verify
-      assert(value == (M_PI / 2));
+      assert(value == (PI / 2));
    }  // Teardown...
    
    // Test the get radians method with a negative angle
@@ -139,7 +139,7 @@ private:
       double value = angle.getRadians();
       
       // Verify
-      assert(value == -(M_PI / 2));
+      assert(value == -(PI / 2));
    }  // Teardown...
    
    // Test that a valid new angle is valid
@@ -250,7 +250,7 @@ private:
       Angle angle;
       
       // Exercise
-      double value = angle.degreesFromRadians(M_PI);
+      double value = angle.degreesFromRadians(PI);
       
       // Verify
       assert(value == 180.0);
@@ -266,7 +266,7 @@ private:
       double value = angle.radiansFromDegrees(180.0);
       
       // Verify
-      assert(value == M_PI);
+      assert(value == PI);
    }  // Teardown
    
    // Test the convert from XY method with zeros

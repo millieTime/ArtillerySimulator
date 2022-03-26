@@ -1,11 +1,13 @@
 /***********************************************************************
  * Header File:
- *    Acceleration : Represents a 2-dimensional acceleration in the artillery simulation
+ *    Acceleration : Represents a 2-dimensional acceleration in the
+ *    artillery simulation
  * Author:
  *    Preston Millward
  * Summary:
- *    Stub of the acceleration class, just enough so the program compiles.
- *    This inherits from the Vector2D class.
+ *    Tracks the components of a 2-dimensional acceleration, and provides
+ *    a simple way to add two accelerations together.
+ *    Inherits from the Vector2D class.
  ************************************************************************/
 
 #pragma once
@@ -14,17 +16,17 @@
 
 class TestAcceleration;
 
-class Acceleration : public Vector2DMock
+class Acceleration : public Vector2D
 {
 public:
    friend class TestAcceleration;
 
    // Default constructor
-   Acceleration() : Vector2DMock() { };
+   Acceleration() : Vector2D() { };
    // Constructs an Acceleration from a horizontal and vertical component
-   Acceleration(double ddx, double ddy) : Vector2DMock(ddx, ddy) { };
+   Acceleration(double ddx, double ddy) : Vector2D(ddx, ddy) { };
    // Constructs an Acceleration from an angle and magnitude
-   Acceleration(double magnitude, Angle angle) : Vector2DMock(magnitude, angle) { }
+   Acceleration(Angle angle, double magnitude) : Vector2D(angle, magnitude) { }
 
    // Getters
    virtual double getDDX() const { return horizontalComponent; };

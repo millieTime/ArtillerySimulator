@@ -47,10 +47,10 @@ public:
    {
       // setup
       // exercise
-      Acceleration acc = Acceleration(2.0, AngleMock(45));
+      Acceleration acc = Acceleration(AngleMock(45), 2.0);
       // verify
-      assert(decimalCloseEnough(acc.horizontalComponent, 0.7071067811865475244));
-      assert(decimalCloseEnough(acc.verticalComponent, 0.7071067811865475244));
+      assert(decimalCloseEnough(acc.horizontalComponent, 1.4142135623730950));
+      assert(decimalCloseEnough(acc.verticalComponent, 1.4142135623730950));
    }  // teardown
 
    void testAddAcceleration()
