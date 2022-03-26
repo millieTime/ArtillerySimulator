@@ -10,17 +10,30 @@
 
 #pragma once
 
-#include "vector2D.h"
+#include "vector2DMock.h"
 
-class Acceleration : public Vector2D
+class TestAcceleration;
+
+class Acceleration : public Vector2DMock
 {
 public:
-   Acceleration() {};
-   Acceleration(double ddx, double ddy) { horizontalComponent = ddx; verticalComponent = ddy; };
-   Acceleration(double magnitude, Angle angle) {};
+   friend class TestAcceleration;
 
-   virtual double getDDX() { return horizontalComponent; };
-   virtual double getDDY() { return verticalComponent; };
-   virtual void addAcceleration(Acceleration otherAccel) {};
-protected:
+   // Default constructor
+   Acceleration() : Vector2DMock() { };
+   // Constructs an Acceleration from a horizontal and vertical component
+   Acceleration(double ddx, double ddy) : Vector2DMock(ddx, ddy) { };
+   // Constructs an Acceleration from an angle and magnitude
+   Acceleration(double magnitude, Angle angle) : Vector2DMock(magnitude, angle) { }
+
+   // Getters
+   virtual double getDDX() const { return horizontalComponent; };
+   virtual double getDDY() const { return verticalComponent; };
+
+   // Adds the components of otherAccel to the components of this Acceleration
+   virtual void addAcceleration(Acceleration otherAccel)
+   {
+      horizontalComponent += otherAccel.getDDX();
+      verticalComponent += otherAccel.getDDY();
+   };
 };

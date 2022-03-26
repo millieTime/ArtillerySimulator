@@ -76,7 +76,7 @@ public:
    };
 
    // adds acceleration to velocity over a period of time.
-   virtual void addAcceleration(Acceleration accel, double time)
+   virtual void applyAcceleration(Acceleration accel, double time)
    {
       horizontalComponent += accel.getDDX() * time;
       verticalComponent += accel.getDDY() * time;

@@ -21,6 +21,15 @@ public:
    AngleMock(double initDegrees) {angle = initDegrees;}
    
    // Methods
-//   virtual double getDegrees() {return angle;} // does this need to be virtual?? isn't it the same as what is actually in angle?
+   virtual double getDegrees() { return angle; }
+   virtual double getRadians()
+   {
+      long double const PI = 3.14159265358979323846;
+      if (angle == 45)
+         return PI / 4.0;
+
+      assert(false);
+      return 0.0;
+   }
 private:
 };

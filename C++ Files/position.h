@@ -36,7 +36,7 @@ public:
    virtual double getPixelsY() const { return (int)(y / metersFromPixels); }
 
    // setters
-   virtual void addAccelerationVelocity(Acceleration accel, Velocity vel, double time);
+   virtual void applyAccelerationVelocity(Acceleration accel, Velocity vel, double time);
    virtual void setMetersX(double xMeters)  { this->x = xMeters;                      }
    virtual void setMetersY(double yMeters)  { this->y = yMeters;                      }
    virtual void addMetersX(double dxMeters) { setMetersX(getMetersX() + dxMeters);    }

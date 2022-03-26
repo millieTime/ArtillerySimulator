@@ -29,7 +29,7 @@ Position::Position(double x, double y) : x(0.0), y(0.0)
 * x1 = x0 + t*vx + 1/2 * ax * t * t
 * y1 = y0 + t*vy + 1/2 * ay * t * t
 ******************************************/
-void Position::addAccelerationVelocity(Acceleration accel, Velocity vel, double time)
+void Position::applyAccelerationVelocity(Acceleration accel, Velocity vel, double time)
 {
    double inertiaX = time * vel.getDX();
    double inertiaY = time * vel.getDY();

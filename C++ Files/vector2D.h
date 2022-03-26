@@ -18,7 +18,6 @@
 #include <cmath>     // For sin() & cos()
 #include "angle.h"   // For the angle class
 
-
 class Vector2D
 {
 public:
@@ -41,7 +40,7 @@ public:
    void setHorizontal(double horizontal) { horizontalComponent = horizontal; };
    void setVertical(double vertical) { verticalComponent = vertical; };
    void addVector(Vector2D vector);
-   
+  
 protected:
    double horizontalComponent;        // The horizontal component
    double verticalComponent;          // The vertical component
