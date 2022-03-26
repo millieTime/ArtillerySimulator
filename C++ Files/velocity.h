@@ -1,10 +1,12 @@
 /***********************************************************************
  * Header File:
- *    Velocity : Keeps track of a velocity in 2-dimensional space
+ *    Velocity : Represents a 2-dimensional velocity in the
+ *    artillery simulation
  * Author:
  *    Preston Millward
  * Summary:
- *    Stub of the Velocity class, just enough so the program compiles.
+ *    Tracks the components of a 2-dimensional velocity, and provides
+ *    a simple way to apply an acceleration over time.
  *    Inherits from the Vector2D class.
  ************************************************************************/
 

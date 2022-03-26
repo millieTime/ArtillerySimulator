@@ -21,7 +21,7 @@
 #define _USE_MATH_DEFINES // for M_PI to work on xcode (comment out on windows)
 #include <cmath>           // for M_PI to work on xcode (comment out on windows)
 class TestProjectile;
-
+class TestHowitzer;
  /*********************************************
   * Projectile
   * Everything we need to know about the
@@ -31,24 +31,25 @@ class Projectile
 {
 public:
    friend class TestProjectile;
+   friend class TestHowitzer;
    Projectile();
    Projectile(Position point);
-   void move(double time);
-   void fire(Velocity initialVelocity);
-   void land(bool onTarget);
-   Position getPosition() const { return position; };
-   Position getLastPosition() const { return shadows.at(1); };
-   double getSpeed() const { return velocity.getSpeed(); };
-   Velocity getVelocity() const { return velocity; };
-   Angle getAngle() const { return Angle(); };
-   float getAge() const { return age; };
-   bool isLoaded() const { return status == LOADED; };
-   bool isFlying() const { return status == FLYING; };
-   bool isLanded() const { return (status == ON_TARGET || status == OFF_TARGET); };
-   bool isOnTarget() const { return status == ON_TARGET; };
-   void draw(ogstream& gout) const {};
+   virtual void move(double time);
+   virtual void fire(Velocity initialVelocity);
+   virtual void land(bool onTarget);
+   virtual Position getPosition() const { return position; };
+   virtual Position getLastPosition() const { return shadows.at(1); };
+   virtual double getSpeed() const { return velocity.getSpeed(); };
+   virtual Velocity getVelocity() const { return velocity; };
+   virtual Angle getAngle() const { return Angle(); };
+   virtual float getAge() const { return age; };
+   virtual bool isLoaded() const { return status == LOADED; };
+   virtual bool isFlying() const { return status == FLYING; };
+   virtual bool isLanded() const { return (status == ON_TARGET || status == OFF_TARGET); };
+   virtual bool isOnTarget() const { return status == ON_TARGET; };
+   virtual void draw(ogstream& gout) const {};
 
-private:
+protected:
    void shiftShadows();
    double getArea() const;
    const double MASS = 46.7;        // kilograms

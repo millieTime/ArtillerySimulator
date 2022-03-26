@@ -10,6 +10,7 @@
 #include "test.h"
 #include "testPosition.h"
 #include "testProjectile.h"
+#include "testHowitzer.h"
 #include "testGround.h"
 #include "testAngle.h"
 #include "testVector2D.h"
@@ -33,6 +34,7 @@ void testRunner()
    TestAngle().run();
    TestVector().run();
    TestVelocity().run();
+   TestHowitzer().run();
 //   TestGravityLookUp().run();
    cout << "All tests passed" << endl;
 }

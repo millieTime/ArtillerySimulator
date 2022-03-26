@@ -1,11 +1,13 @@
 /***********************************************************************
  * Header File:
- *    Acceleration : Represents a 2-dimensional acceleration in the artillery simulation
+ *    Acceleration : Represents a 2-dimensional acceleration in the
+ *    artillery simulation
  * Author:
  *    Preston Millward
  * Summary:
- *    Stub of the acceleration class, just enough so the program compiles.
- *    This inherits from the Vector2D class.
+ *    Tracks the components of a 2-dimensional acceleration, and provides
+ *    a simple way to add two accelerations together.
+ *    Inherits from the Vector2D class.
  ************************************************************************/
 
 #pragma once
