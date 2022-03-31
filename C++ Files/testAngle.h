@@ -168,7 +168,7 @@ private:
       assert(value == false);
    }  // Teardown
    
-   //
+   // test the convert to valid with a value over the max
    void test_convertToValid_max()
    {
       // Setup
@@ -181,7 +181,7 @@ private:
       assert(value == 90.0);
    }  // Teardown
    
-   //
+   // test the convert to valid with a value under the min
    void test_convertToValid_min()
    {
       // Setup
@@ -194,7 +194,7 @@ private:
       assert(value == -90.0);
    }  // Teardown
    
-   // Testing the boundry
+   // Testing the positive boundry
    void test_convertToValid_181()
    {
       // Setup
@@ -207,6 +207,7 @@ private:
       assert(value == -179.0);
    }  // Teardown
    
+   // Testing the negative boundary
    void test_convertToValid_181Neg()
    {
       // Setup
@@ -219,6 +220,7 @@ private:
       assert(value == 179.0);
    }  // Teardown
    
+   // Testing a common case
    void test_convertToValid_195()
    {
       // Setup
@@ -231,6 +233,7 @@ private:
       assert(value == -165);
    }  // Teardown
    
+   // Testing a negative common case
    void test_convertToValid_195Neg()
    {
       // Setup

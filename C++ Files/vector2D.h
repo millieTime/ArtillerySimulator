@@ -1,4 +1,4 @@
-/***********************************************************************
+/**************************************************************************************
  * Header File:
  *    Vector 2D : keeps track of the horizontal and vertical components
  *    of a vector in 2-dimensional space, as well as including some simple
@@ -7,17 +7,16 @@
  *    Emilio Regino & Preston Millward
  * Summary:
  *    A 2D Vector expressed as horizontal and vertical components.
- ************************************************************************/
-//
-// IDEAS FOR IMPROVEMENT
-//
-//WHAT IF WE ADDED AN ADD METHOD THAT EVERYTHING GOES THROUGH TO ADD TO HOR AND VERT
+ **************************************************************************************/
 
 #pragma once
-
 #include <cmath>     // For sin() & cos()
 #include "angle.h"   // For the angle class
 
+/**************************************************************************************
+ * VECTOR2D
+ * The vector2D class
+ **************************************************************************************/
 class Vector2D
 {
 public:

@@ -1,26 +1,33 @@
-/***********************************************************************
+/***************************************************************************************
  * Header File:
- *    Look Up : Contains a table of keys and values, with the ability to
- *    search for a value given a key and interpolate if the key is not present.
+ *    Look Up : The base class for the gravity, drag, mach, and air density
+ *    classes. Does not contain a table of keys and values, just the necessary
+ *    methods to search a table of keys and values
  * Author:
- *    Preston Millward
+ *    Preston Millward & Emilio Regino
  * Summary:
- *    Stub of the Look Up class, just enough so the program compiles.
- ************************************************************************/
+ *    Contains methods to search a referanced table for a value given a key
+ *    and interpolate for the value if the given key is  not present in the table.
+ ****************************************************************************************/
+
 #pragma once
 
-//#include <tuple>
-#include <cassert>
+#include "tableItem.h"        // For the table item struct
+#include "key1Key2.h"         // For the key1key2 struct
+#include <cmath>              // For the abs() function
 
+/******************************************************************************************
+ * LOOK UP
+ * The look up class
+ ******************************************************************************************/
 class LookUp
 {
 public:
-   LookUp() {
-      
-   };
+   LookUp() {}
 
 protected:
-//   std::tuple<double, double> * table;
-   double get_value(double input) {assert(false); return 0.0;};
-   double interpolate(double x1, double x2, double y1, double y2, double toFind);
+   virtual double getValue(double input, const tableItem *table, int max) const;
+   key1key2 searchTable(double keyNotFound, const tableItem *table) const;
+   virtual double interpolate(double x1, double y1, double x2, double y2, double toFind) const;
+   bool closeEnough(double computedValue, double hardcodeValue) const;
 };

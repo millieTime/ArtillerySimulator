@@ -14,10 +14,10 @@
 #include "testGround.h"
 #include "testAngle.h"
 #include "testVector2D.h"
-#include "testGravityLookUp.h"
-//#include "testAirDensityLookUp.h"
-//#include "testDragLookUp.h"
-#include "testMachLookUp.h"
+#include "testGravity.h"
+#include "testAirDensity.h"
+#include "testDrag.h"
+#include "testMach.h"
 #include "testAcceleration.h"
 #include "testVelocity.h"
 #include <iostream>
@@ -30,17 +30,17 @@ using namespace std;
 void testRunner()
 {
    cout << "Testing. . ." << endl;
-   TestPosition().run();
-   TestAcceleration().run();
-   TestProjectile().run();
+//   TestPosition().run();
+//   TestAcceleration().run();
+//   TestProjectile().run();
 //   TestGround().run();
    TestAngle().run();
-   TestVector().run();
-   TestGravityLookUp().run();
-   //TestAirDensityLookUp().run();
-   //TestDragLookUp().run();
-   TestMachLookUp().run();
-   TestVelocity().run();
-   TestHowitzer().run();
+//   TestVector().run();
+   TestGravity().run();
+   TestAirDensity().run();
+   TestDrag().run();
+   TestMach().run();
+//   TestVelocity().run();
+//   TestHowitzer().run();
    cout << "All tests passed" << endl;
 }
