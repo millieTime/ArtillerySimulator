@@ -13,7 +13,7 @@
 #pragma once
 #include "lookUp.h"              // for the inherited methods
 #include "tableItem.h"           // for the table item struct
-const int DRAG_ARRAY_SIZE = 16;  // the size of the table array
+const int DRAG_ARRAY_SIZE = 17;  // the size of the table array
 
 /*********************************************************************************************
  * DRAG

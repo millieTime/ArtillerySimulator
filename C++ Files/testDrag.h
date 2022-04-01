@@ -21,6 +21,8 @@ public:
    void run()
    {
       cout << "Drag: ";
+      test_getDragZeroValue();
+      test_getDragPoint15();
       test_getDragZero();
       test_getDragInTable();
       test_getDragInterpolate();
@@ -32,6 +34,32 @@ private:
    //
    // Gravity Look Up
    //
+   
+   // Test the getDrag method for the value 0
+   void test_getDragZeroValue()
+   {
+      // Setup
+      Drag drag;
+      
+      // Exercise
+      double value = drag.getDrag(0.0);
+      
+      // Verify
+      assert(value == 0.0);
+   }  // Teardown
+   
+   // Test the getDrag method for the value .15
+   void test_getDragPoint15()
+   {
+      // Setup
+      Drag drag;
+      
+      // Exercise
+      double value = drag.getDrag(0.15);
+      
+      // Verify
+      assert(value == 0.08145);
+   }  // Teardown
    
    // Test the getDrag method for the 0 index
    void test_getDragZero()

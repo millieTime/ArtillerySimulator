@@ -134,7 +134,7 @@ int WINAPI wWinMain(
 int main(int argc, char** argv)
 #endif // !_WIN32
 {
-   //testRunner();
+   testRunner();
    //Initialize OpenGL
    Position ptUpperRight;
    ptUpperRight.setPixelsX(700.0);
