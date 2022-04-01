@@ -23,10 +23,14 @@
 class LookUp
 {
 public:
+   // Constructors
    LookUp() {}
 
 protected:
+   // Getters
    virtual double getValue(double input, const tableItem *table, int max) const;
+   
+   // All the necessary methods to look up a value in a table
    key1key2 searchTable(double keyNotFound, const tableItem *table) const;
    virtual double interpolate(double x1, double y1, double x2, double y2, double toFind) const;
    bool closeEnough(double computedValue, double hardcodeValue) const;

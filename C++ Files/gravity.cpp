@@ -18,17 +18,6 @@
  *********************************************************************************************/
 Gravity :: Gravity()
 {
-   // Could also implement like this
-   //      tableItem table[] =
-   //      {
-   //          tableItem item1 ();
-   //          item1.key   = 0.000;
-   //          item1.value = 9.807;
-   //
-   //          tableItem item2;
-   //          item2.key   = 1000.0;
-   //          item2.value = 9.804;
-   //      };
    table[0] = tableItem(0.0,       9.807);
    table[1] = tableItem(1000.0,    9.804);
    table[2] = tableItem(2000.0,    9.801);
