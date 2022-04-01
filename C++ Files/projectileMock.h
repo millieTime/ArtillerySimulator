@@ -17,7 +17,7 @@ class ProjectileMock : public Projectile
 {
 public:
    friend class TestHowitzer;
-   ProjectileMock();
+   ProjectileMock() { Projectile(); };
    ProjectileMock(Position point) { assert(false); };
    virtual void move(double time) { assert(false); };
    virtual void fire(Velocity initialVelocity) { assert(false); };

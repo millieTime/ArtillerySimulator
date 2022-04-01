@@ -19,13 +19,13 @@ void Angle::setDegrees(double newAngle)
 {
    // verify the new angle is valid
    // angle must be between -pi and +pi radians
-   while (newAngle >= 180)
-      newAngle = newAngle - 180;
-   while (newAngle <= -180)
-      newAngle = newAngle + 180;
+  // while (newAngle >= 180)
+  //   newAngle = newAngle - 180;
+  // while (newAngle <= -180)
+  //    newAngle = newAngle + 180;
 
    // Now assign the new angle
-   angle = newAngle;
+   angle = convertToValid(newAngle);
 }
 
 /*************************************************

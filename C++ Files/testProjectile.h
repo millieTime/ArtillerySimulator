@@ -120,18 +120,20 @@ public:
       Projectile shell = defaultSetup();
       shell.shadows.clear();
       shell.shadows.push_back(Position(1, 2));
+      VelocityMock vm = VelocityMock(0, 0);
+      Position p = Position(3, 4);
       // exercise
-      shell.fire(VelocityMock(0, 0));
+      shell.fire(vm, p);
       // verify
-      assert(shell.position.getMetersX() == 1);
-      assert(shell.position.getMetersY() == 2);
+      assert(shell.position.getMetersX() == 3);
+      assert(shell.position.getMetersY() == 4);
       assert(shell.velocity.horizontalComponent == 0);
       assert(shell.velocity.verticalComponent == 0);
       assert(shell.age == 0);
       assert(shell.status == Projectile::FLYING);
       assert(shell.shadows.size() == 1);
-      assert(shell.shadows.at(0).getMetersX() == 1);
-      assert(shell.shadows.at(0).getMetersY() == 2);
+      assert(shell.shadows.at(0).getMetersX() == 3);
+      assert(shell.shadows.at(0).getMetersY() == 4);
    }  // teardown
 
    // Fire should set the projectile's status to FLYING and its velocity
@@ -141,41 +143,46 @@ public:
    {
       // setup
       Projectile shell = defaultSetup();
+      shell.status = Projectile::ON_TARGET;
       shell.velocity.horizontalComponent = 0.0;
       shell.velocity.verticalComponent = 0.0;
       shell.shadows.clear();
       shell.shadows.push_back(Position(1, 2));
+      VelocityMock vm = VelocityMock(3, 4);
+      Position p = Position(3, 4);
       // exercise
-      shell.fire(VelocityMock(3, 4));
+      shell.fire(vm, p);
       // verify
-      assert(shell.position.getMetersX() == 1);
-      assert(shell.position.getMetersY() == 2);
+      assert(shell.position.getMetersX() == 3);
+      assert(shell.position.getMetersY() == 4);
       assert(shell.velocity.horizontalComponent == 3);
       assert(shell.velocity.verticalComponent == 4);
       assert(shell.age == 0);
       assert(shell.status == Projectile::FLYING);
       assert(shell.shadows.size() == 1);
-      assert(shell.shadows.at(0).getMetersX() == 1);
-      assert(shell.shadows.at(0).getMetersY() == 2);
+      assert(shell.shadows.at(0).getMetersX() == 3);
+      assert(shell.shadows.at(0).getMetersY() == 4);
    }  // teardown
 
-   // Fire should do nothing if the projectile is not LOADED.
+   // Fire should do nothing if the projectile is FLYING.
    void test_Projectile_Fire_Wrong_Status() const
    {
       // setup
       Projectile shell = defaultSetup();
       shell.velocity.horizontalComponent = 0.0;
       shell.velocity.verticalComponent = 0.0;
-      shell.status = Projectile::ON_TARGET;
+      shell.status = Projectile::FLYING;
+      VelocityMock vm = VelocityMock(3, 4);
+      Position p = Position(6, 8);
       // exercise
-      shell.fire(VelocityMock(3, 4));
+      shell.fire(vm, p);
       // verify
       assert(shell.position.getMetersX() == 1);
       assert(shell.position.getMetersY() == 2);
       assert(shell.velocity.horizontalComponent == 0);
       assert(shell.velocity.verticalComponent == 0);
       assert(shell.age == 5);
-      assert(shell.status == Projectile::ON_TARGET);
+      assert(shell.status == Projectile::FLYING);
       verifyEmptyShadows(shell);
    }  // teardown
 

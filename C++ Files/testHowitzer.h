@@ -377,14 +377,18 @@ public:
       Howitzer how = Howitzer();
       how.angle = AngleMock(0);
       how.position = Position(25, 30);
+      ProjectileMock pm = ProjectileMock();
+      pm.position = Position(0, 0);
+      pm.velocity = VelocityMock(0, 0);
+      pm.status = Projectile::LOADED;
       // exercise
-      Projectile p = how.fire();
+      how.fire(pm);
       // verify
-      assert(p.velocity.getDX() == 0);
-      assert(p.velocity.getDY() == 827.0);
-      assert(p.position.getMetersX() == 25);
-      assert(p.position.getMetersY() == 30);
-      assert(p.status == Projectile::FLYING);
+      assert(pm.velocity.getDX() == 0);
+      assert(pm.velocity.getDY() == 827.0);
+      assert(pm.position.getMetersX() == 25);
+      assert(pm.position.getMetersY() == 30);
+      assert(pm.status == Projectile::FLYING);
    }  // teardown
 
 
@@ -394,14 +398,18 @@ public:
       Howitzer how = Howitzer();
       how.angle = AngleMock(30);
       how.position = Position(25, 30);
+      ProjectileMock pm = ProjectileMock();
+      pm.position = Position(0, 0);
+      pm.velocity = VelocityMock(0, 0);
+      pm.status = Projectile::LOADED;
       // exercise
-      Projectile p = how.fire();
+      how.fire(pm);
       // verify
-      assert(decimalCloseEnough(p.velocity.getDX(), 413.5));
-      assert(decimalCloseEnough(p.velocity.getDY(), 716.2030089));
-      assert(p.position.getMetersX() == 25);
-      assert(p.position.getMetersY() == 30);
-      assert(p.status == Projectile::FLYING);
+      assert(decimalCloseEnough(pm.velocity.getDX(), 413.5));
+      assert(decimalCloseEnough(pm.velocity.getDY(), 716.2030089));
+      assert(pm.position.getMetersX() == 25);
+      assert(pm.position.getMetersY() == 30);
+      assert(pm.status == Projectile::FLYING);
    }  // teardown
 
    void testFireFourthQuadrant()
@@ -410,13 +418,17 @@ public:
       Howitzer how = Howitzer();
       how.angle = AngleMock(-70);
       how.position = Position(25, 30);
+      ProjectileMock pm = ProjectileMock();
+      pm.position = Position(0, 0);
+      pm.velocity = VelocityMock(0, 0);
+      pm.status = Projectile::LOADED;
       // exercise
-      Projectile p = how.fire();
+      how.fire(pm);
       // verify
-      assert(decimalCloseEnough(p.velocity.getDX(), -777.1257973899));
-      assert(decimalCloseEnough(p.velocity.getDY(), 282.85065853));
-      assert(p.position.getMetersX() == 25);
-      assert(p.position.getMetersY() == 30);
-      assert(p.status == Projectile::FLYING);
+      assert(decimalCloseEnough(pm.velocity.getDX(), -777.1257973899));
+      assert(decimalCloseEnough(pm.velocity.getDY(), 282.85065853));
+      assert(pm.position.getMetersX() == 25);
+      assert(pm.position.getMetersY() == 30);
+      assert(pm.status == Projectile::FLYING);
    }  // teardown
 };

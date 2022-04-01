@@ -25,7 +25,7 @@ public:
    
    Howitzer() { Howitzer(Position(0, 0)); };
    Howitzer(Position startPosition) { position = startPosition; angle = AngleMock(0); };
-   Projectile fire();
+   void fire(Projectile & p);
    void draw(ogstream & gout) const { draw(gout, -1); }
    void draw(ogstream & gout, double age) const { gout.drawHowitzer(position, angle.getRadians(), age); };
    Angle getAngle() const { return angle; };
