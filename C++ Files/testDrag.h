@@ -21,11 +21,11 @@ public:
    void run()
    {
       cout << "Drag: ";
-      test_getDragZeroValue();
+      test_getDragZeroSpeed();
       test_getDragPoint15();
-      test_getDragZero();
-      test_getDragInTable();
-      test_getDragInterpolate();
+      test_getDragPoint3();
+      test_getDragPoint89();
+      test_getDragNotContained();
       test_searchTable();
       test_interpolate();
       cout << "Passed" << endl;
@@ -35,66 +35,76 @@ private:
    // Gravity Look Up
    //
    
-   // Test the getDrag method for the value 0
-   void test_getDragZeroValue()
+   // Test the getDrag method for mach 0
+   void test_getDragZeroSpeed()
    {
       // Setup
       Drag drag;
+      double mach = 0.0;
+      double value = -1.0;
       
       // Exercise
-      double value = drag.getDrag(0.0);
+      value = drag.getDrag(mach);
       
       // Verify
       assert(value == 0.0);
    }  // Teardown
    
-   // Test the getDrag method for the value .15
+   // Test the getDrag method for mach .15
    void test_getDragPoint15()
    {
       // Setup
       Drag drag;
+      double mach = 0.15;
+      double value = -1.0;
       
       // Exercise
-      double value = drag.getDrag(0.15);
+      value = drag.getDrag(mach);
       
       // Verify
       assert(value == 0.08145);
    }  // Teardown
    
-   // Test the getDrag method for the 0 index
-   void test_getDragZero()
+   // Test the getDrag method for 0.300 mach
+   void test_getDragPoint3()
    {
       // Setup
       Drag drag;
+      double mach = 0.300;
+      double value = -1.0;
       
       // Exercise
-      double value = drag.getDrag(0.300);
+      value = drag.getDrag(mach);
       
       // Verify
       assert(value == 0.1629);
    }  // Teardown
    
-   // Test the getDrag method for another value in the table
-   void test_getDragInTable()
+   // Test the getDrag method for 0.890 mach
+   void test_getDragPoint89()
    {
       // Setup
       Drag drag;
+      double mach = 0.890;
+      double value = -1.0;
       
       // Exercise
-      double value = drag.getDrag(0.890);
+      value = drag.getDrag(mach);
       
       // Verify
       assert(value == 0.2597);
    }  // Teardown
    
    // Test the getDrag method for a value not in the table
-   void test_getDragInterpolate()
+   void test_getDragNotContained()
    {
       // Setup
       Drag drag;
+      double mach = 0.940;
+      double value = -1.0;
       
       // Exercise
-      double value = drag.getDrag(0.940);
+      value = drag.getDrag(mach);
       
       // Verify
       assert(drag.closeEnough(value, 0.31484));
@@ -105,9 +115,13 @@ private:
    {
       // Setup
       Drag drag;
+      double dragVal = 0.940;
+      key1key2 value;
+      value.key1 = -1.0;
+      value.key2 = -1.0;
       
       // Exercise
-      key1key2 value = drag.searchTable(0.940, drag.table);
+      value = drag.searchTable(dragVal, drag.table);
       
       // Verify
       assert(value.key1 == 0.920);
@@ -119,9 +133,15 @@ private:
    {
       // Setup
       Drag drag;
+      double x1 = 0.920;
+      double y1 = 0.3010;
+      double x2 = 0.960;
+      double y2 = 0.3287;
+      double xToFind = 0.940;
+      double value = -1.0;
       
       // Exercise
-      double value = drag.interpolate(0.920,  0.3010, 0.960, 0.3287, 0.940);
+      value = drag.interpolate(x1,  y1, x2, y2, xToFind);
       
       // Verify
       assert(drag.closeEnough(value, 0.31484));

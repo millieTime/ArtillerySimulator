@@ -13,17 +13,15 @@
 
 /*************************************************************
  * TABLE ITEM
- * The table item struct
+ * The table item struct. All member variables and
+ * constructors are public by default.
  **************************************************************/
 struct tableItem
 {
+   // Constructors
    tableItem(){};
-   tableItem(double a, double b)
-   {
-      key = a;
-      value = b;
-   }
+   tableItem(double a, double b) : key(a) , value(b) {};
    
-   double key;
-   double value;
+   double key;       // The key in a table
+   double value;     // The value of the key given key in the table
 };
