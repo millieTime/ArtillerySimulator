@@ -6,12 +6,13 @@
 //
 
 #pragma once
-#include "dragLookUp.h"
+#include "drag.h"
+#include<cassert>
 
-class DragLookUpMock : DragLookUp
+class DragMock : Drag
 {
 public:
-   DragLookUpMock() {};
+   DragMock() {};
    virtual double getDrag(double mach) const 
    {
       // dragMock returns 0.1629 if it gets anything less than 0.3

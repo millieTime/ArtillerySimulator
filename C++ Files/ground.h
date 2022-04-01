@@ -43,7 +43,7 @@ public:
       return posImpact.getMetersY();
    }
 
-   // where the the target locateD?
+   // where the the target located?
    const Position& getTarget() const
    {
       return posTarget;

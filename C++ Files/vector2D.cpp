@@ -1,15 +1,15 @@
-/***********************************************************************
+/**************************************************************************************
  * Header File:
  *    Vector 2D : keeps track of the horizontal and vertical components
  *    of a vector in 2-dimensional space, as well as including some simple
  *    calculations about the vector.
  * Author:
- *    Emilio Regino
+ *    Emilio Regino & Preston Millward
  * Summary:
- *    The vector class definition
- ************************************************************************/
+ *    A 2D Vector expressed as horizontal and vertical components.
+ **************************************************************************************/
 
-#include "vector2D.h"
+#include "vector2D.h"     // for the vector class def
 
 /*************************************************
  * VECTOR 2D

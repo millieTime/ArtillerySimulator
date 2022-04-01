@@ -12,10 +12,10 @@
 #include "velocity.h"
 #include "acceleration.h"
 #include "angle.h"
-#include "airDensityLookUp.h"
-#include "gravityLookUp.h"
-#include "dragLookUp.h"
-#include "machLookUp.h"
+#include "airDensity.h"
+#include "gravity.h"
+#include "drag.h"
+#include "mach.h"
 #include "uiDraw.h"  // for ogstream
 #include <vector>    // for vectors
 #define _USE_MATH_DEFINES // for M_PI to work on xcode (comment out on windows)
@@ -56,10 +56,10 @@ protected:
    const double MASS = 46.7;        // kilograms
    const double DIAMETER = 0.15489; // meters
    const char NUM_SHADOWS = 6;
-   const GravityLookUp gravityTable;
-   const AirDensityLookUp airDensityTable;
-   const MachLookUp machTable;
-   const DragLookUp dragTable;
+   const Gravity gravityTable;
+   const AirDensity airDensityTable;
+   const Mach machTable;
+   const Drag dragTable;
    float age = 0;
    Velocity velocity;
    Position position;
