@@ -11,7 +11,7 @@
 #include <cassert>
 #include "angle.h"
 
-class TestProjectile;                        // why is projectile here?
+class TestProjectile;
 
 class AngleMock : public Angle
 {

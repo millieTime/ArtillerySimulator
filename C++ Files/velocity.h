@@ -24,12 +24,17 @@ public:
    friend class TestVelocity;
    friend class TestProjectile;
 
+   // Default constructor
    Velocity() {};
+   // Construct from components
    Velocity(double x, double y) : Vector2D(x, y) { };
+   // Construct from angle and magnitude
    Velocity(Angle angle, double mag) : Vector2D(angle, mag) {};
 
+   // Apply an acceleration to this velocity for the specified amount of time
    virtual void applyAcceleration(Acceleration accel, double time);
 
+   // Getters
    virtual double getDX() const { return horizontalComponent; };
    virtual double getDY() const { return verticalComponent; };
    virtual double getSpeed() const { return getMagnitude(); };

@@ -6,12 +6,13 @@
 //
 
 #pragma once
-#include "machLookUp.h"
+#include "mach.h"
+#include<cassert>
 
-class MachLookUpMock : MachLookUp
+class MachMock : Mach
 {
 public:
-   MachLookUpMock() {};
+   MachMock() {};
    virtual double getMach(double altitude) const 
    {
       // machMock returns 340 if it gets a 0 or 2.

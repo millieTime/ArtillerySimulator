@@ -23,21 +23,37 @@ class Howitzer
 public:
    friend class TestHowitzer;
    
+   // Default Constructor
    Howitzer() { Howitzer(Position(0, 0)); };
-   Howitzer(Position startPosition) { position = startPosition; angle = AngleMock(0); };
+   // Construct with a start position
+   Howitzer(Position startPosition) { position = startPosition; angle = Angle(0); };
+   // Fire the projectile
    Projectile fire();
+
+   // Draw the howitzer if the projectile has not been fired.
    void draw(ogstream & gout) const { draw(gout, -1); }
+   // Draw the howitzer if the projectile has been fired.
    void draw(ogstream & gout, double age) const { gout.drawHowitzer(position, angle.getRadians(), age); };
+
+   // Return the angle the howitzer is pointing
    Angle getAngle() const { return angle; };
+
+   // Set position
    void setPosition(Position newPosition) { position = newPosition; };
+
+   // The following functions adjust the angle of the howitzer.
+   // Closer to 0
    void raise();
+   // Further from 0
    void lower();
+   // Closer to +90
    void clockwise();
+   // Closer to -90
    void counterClockwise();
 
 private:
-   Angle angle;
-   Position position;
+   Angle angle;                             // Angle the howitzer is pointing
+   Position position;                       // Where the howitzer is positioned
    double const MUZZLE_VELOCITY = 827.0;    // m/s
    double const SMALL_ANGLE_CHANGE = 0.003; // radians
    double const LARGE_ANGLE_CHANGE = 0.05;  // radians

@@ -1,17 +1,18 @@
 //
-//  airDensityLookUpMock.h
+//  airDensityMock.h
 //  Lab10
 //
 //  Created by Emilio on 3/12/22.
 //
 
 #pragma once
-#include "airDensityLookUp.h"
+#include "airDensity.h"
+#include <cassert>
 
-class AirDensityLookUpMock : AirDensityLookUp
+class AirDensityMock : AirDensity
 {
 public:
-   AirDensityLookUpMock() {};
+   AirDensityMock() {};
    virtual double getDensity(double altitude) const 
    {
       // airMock  returns 1.225 if it gets a 0 or 2.

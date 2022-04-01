@@ -22,9 +22,11 @@ public:
    // Runs all the test cases
    void run()
    {
+      // Test position modifiers.
       testPositionConstructor();
       testSetPosition();
 
+      // Test the raise function
       testRaiseNormal();
       testRaiseMin();
       testRaiseMax();
@@ -34,6 +36,7 @@ public:
       testRaisePastZeroPos();
       testRaisePastZeroNeg();
 
+      // Test the lower function
       testLowerNormal();
       testLowerMin();
       testLowerMax();
@@ -43,12 +46,21 @@ public:
       testLowerPastMin();
       testLowerPastMax();
 
+      // Test the clockwise function
       testClockwiseNormal();
       testClockwiseMin();
       testClockwiseMax();
       testClockwiseToMax();
       testClockwisePastMax();
 
+      // Test counterclockwise function
+      testCounterClockwiseNormal();
+      testCounterClockwiseMin();
+      testCounterClockwiseMax();
+      testCounterClockwiseToMax();
+      testCounterClockwisePastMax();
+
+      // Test the fire function
       testFireUp();
       testFireFirstQuadrant();
       testFireFourthQuadrant();

@@ -6,12 +6,13 @@
 //
 
 #pragma once
-#include "gravityLookUp.h"
+#include "gravity.h"
+#include<cassert>
 
-class GravityLookUpMock : GravityLookUp
+class GravityMock : Gravity
 {
 public:
-   GravityLookUpMock() {};
+   GravityMock() {};
    virtual double getGravity(double altitude) const 
    {
       // gravMock returns 9.807 if it gets a 0 or 2.

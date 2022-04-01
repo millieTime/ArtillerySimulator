@@ -30,6 +30,7 @@ public:
       test_getDegrees();
       test_getRadian_positive();
       test_getRadian_negative();
+
       test_verifyNewAngle_IsValid();
       test_verifyNewAngle_IsInvalid();
       test_convertToValid_max();
@@ -38,10 +39,12 @@ public:
       test_convertToValid_181Neg();
       test_convertToValid_195();
       test_convertToValid_195Neg();
+
       test_degreesFromRadians();
       test_radiansFromDegrees();
       test_degreesFromXYZero();
       test_degreesFromXY();
+
       cout << "Passed" << endl;
    }
    

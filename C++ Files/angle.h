@@ -47,6 +47,6 @@ protected:
    double degreesFromXY(double x, double y) const { return degreesFromRadians(atan2(x, y)); }
    
    // Validators
-   bool verifyNewAngle(double newAngle) { return (newAngle <= 180.0 && newAngle >= -180.0); };
+   bool verifyNewAngle(double newAngle) { return (newAngle <= 180.0 && newAngle >= -180.0); }
    double convertToValid(double newAngle);
 };

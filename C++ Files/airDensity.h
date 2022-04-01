@@ -31,6 +31,6 @@ public:
    // Getters
    virtual double getDensity(double altitude) const;
    
-private:
+protected:
    tableItem table [AIRDENSITY_ARRAY_MAX];         // The table array
 };
