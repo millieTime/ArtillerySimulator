@@ -96,10 +96,8 @@ void Howitzer::counterClockwise()
  * position, with a velocity of the Howitzer's muzzle
  * velocity
  **************************************************/
-Projectile Howitzer::fire()
+void Howitzer::fire(Projectile & p)
 {
-   Projectile p = Projectile(position);
    Velocity v = Velocity(angle, MUZZLE_VELOCITY);
-   p.fire(v);
-   return p;
+   p.fire(v, position);
 }

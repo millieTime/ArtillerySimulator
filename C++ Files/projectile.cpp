@@ -39,13 +39,16 @@ Projectile Projectile::operator=(Projectile otherP)
 * Tells the projectile it has been fired, and sets its velocity
 * to the given velocity
 *************************************************************/
-void Projectile::fire(Velocity initialVelocity)
+void Projectile::fire(Velocity initialVelocity, Position initialPosition)
 {
-   if (status == LOADED)
+   if (status != FLYING)
    {
+      shadows.clear();
       age = 0;
       status = FLYING;
       velocity = initialVelocity;
+      position = initialPosition;
+      shadows.push_back(position);
    }
 }
 
@@ -110,7 +113,7 @@ void Projectile::move(double time)
 
       // Compute the total acceleration acting on the projectile.
       double dragForce = 0.5 * dragCoeff * density * speed * speed * getArea();
-      Acceleration dragAcceleration = Acceleration(velocity.getAngle() , -dragForce / MASS);
+      Acceleration dragAcceleration = Acceleration(velocity.getAngle(), -dragForce / MASS);
       Acceleration gravityAcceleration = Acceleration(0, -gravity);
       dragAcceleration.addAcceleration(gravityAcceleration);
 

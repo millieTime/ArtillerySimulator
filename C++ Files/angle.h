@@ -23,7 +23,7 @@ public:
    
    // Constructors
    Angle() : angle(0.0f) {};
-   Angle(double angle) { setDegrees(angle); }
+   Angle(double angle) { setDegrees(convertToValid(angle)); }
    Angle(double x, double y) { angle =  degreesFromXY(x, y); }
    
    // Getters
@@ -32,10 +32,10 @@ public:
    
    // Setters
    void setDegrees(double newAngleDegrees);
-   void setRadians(double newAngleRadians) { setDegrees(degreesFromRadians(newAngleRadians)); };
+   void setRadians(double newAngleRadians) { setDegrees(convertToValid(degreesFromRadians(newAngleRadians))); };
    
    // Updaters
-   void addDegrees(double amount) { setDegrees(angle + amount); };
+   void addDegrees(double amount) { setDegrees(convertToValid(angle + amount)); };
    void addRadians(double amount) { addDegrees(degreesFromRadians(amount)); };
    
 protected:

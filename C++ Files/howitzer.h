@@ -27,8 +27,9 @@ public:
    Howitzer() { Howitzer(Position(0, 0)); };
    // Construct with a start position
    Howitzer(Position startPosition) { position = startPosition; angle = Angle(0); };
+  
    // Fire the projectile
-   Projectile fire();
+   void fire(Projectile & p);
 
    // Draw the howitzer if the projectile has not been fired.
    void draw(ogstream & gout) const { draw(gout, -1); }

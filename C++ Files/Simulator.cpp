@@ -73,7 +73,7 @@ void callBack(const Interface* pUI, void* p)
 
    // fire that gun
    if (pUI->isSpace())
-      pSimulator->projectile = pSimulator->howitzer.fire();
+      pSimulator->howitzer.fire(pSimulator->projectile);
 
    //
    // perform all the game logic
@@ -100,7 +100,12 @@ void callBack(const Interface* pUI, void* p)
    pSimulator->ground.draw(gout);
 
    // draw the howitzer
-   pSimulator->howitzer.draw(gout, pSimulator->projectile.getAge());
+   double ageToPass = -1;
+   if (!pSimulator->projectile.isLanded())
+   {
+      ageToPass = pSimulator->projectile.getAge();
+   }
+   pSimulator->howitzer.draw(gout, ageToPass);
 
    // draw the projectile
    pSimulator->projectile.draw(gout);

@@ -36,7 +36,7 @@ public:
    Projectile(Position point);
    Projectile operator=(Projectile otherP);
    virtual void move(double time);
-   virtual void fire(Velocity initialVelocity);
+   virtual void fire(Velocity initialVelocity, Position initialPosition);
    virtual void land(bool onTarget);
    virtual Position getPosition() const { return position; };
    virtual Position getLastPosition() const { return shadows.at(1); };
